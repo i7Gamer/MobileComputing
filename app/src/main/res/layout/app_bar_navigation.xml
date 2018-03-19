@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/fab_add"
             fab:fab_label="@string/title_button_add_new_product"
-            fab:fab_size="mini" />
+            fab:fab_size="normal" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fabAddShop"
@@ -53,15 +53,15 @@
             android:layout_height="wrap_content"
             android:src="@drawable/fab_add"
             fab:fab_label="@string/title_button_add_new_shop"
-            fab:fab_size="mini" />
+            fab:fab_size="normal" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fabAddSubcategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/fab_add"
-            fab:fab_label="Subcategory"
-            fab:fab_size="mini" />
+            fab:fab_label="@string/title_button_add_new_standardlist"
+            fab:fab_size="normal" />
 
     </com.github.clans.fab.FloatingActionMenu>
 
