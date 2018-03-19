@@ -11,8 +11,8 @@
     <string name="title_button_add_new_product">Neues Produkt hinzufügen</string>
     <string name="title_button_add_new_standardlist">Neue Standardliste hinzufügen</string>
 
-    <string name="nav_shoppinglist">Shoppingliste</string>
-    <string name="nav_standardlist">Standardliste</string>
-    <string name="nav_purchase_history">Einkaufsverlauf</string>
-    <string name="nav_settings">Einstellungen</string>
+    <string name="navigation_shoppinglist">Shoppingliste</string>
+    <string name="navigation_standardlist">Standardliste</string>
+    <string name="navigation_purchase_history">Einkaufsverlauf</string>
+    <string name="navigation_settings">Einstellungen</string>
 </resources>
