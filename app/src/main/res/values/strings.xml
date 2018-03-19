@@ -6,9 +6,12 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
-
     <string name="title_button_add_new_shop">Add new shop</string>
     <string name="title_button_add_new_product">Add new product</string>
-    <string name="title_button_add_new_template">Add new template</string>
+    <string name="title_button_add_new_standardlist">Add new standard list</string>
+
+    <string name="nav_shoppinglist">Add new shop</string>
+    <string name="nav_standardlist">Add new product</string>
+    <string name="nav_purchase_history">Add new standard list</string>
+    <string name="nav_settings">Settings</string>
 </resources>

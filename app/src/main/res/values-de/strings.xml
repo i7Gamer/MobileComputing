@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Shopping List</string>
+    <string name="title_activity_shopping_list">Shopping List</string>
+    <string name="title_activity_navigation">Shopping List</string>
+
+    <string name="navigation_drawer_open">navigation drawer öffnen</string>
+    <string name="navigation_drawer_close">navigation drawer schließen</string>
+
+    <string name="title_button_add_new_shop">Neuen Shop hinzufügen</string>
+    <string name="title_button_add_new_product">Neues Produkt hinzufügen</string>
+    <string name="title_button_add_new_standardlist">Neue Standardliste hinzufügen</string>
+
+    <string name="nav_shoppinglist">Shoppingliste</string>
+    <string name="nav_standardlist">Standardliste</string>
+    <string name="nav_purchase_history">Einkaufsverlauf</string>
+    <string name="nav_settings">Einstellungen</string>
+</resources>
