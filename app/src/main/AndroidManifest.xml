@@ -12,10 +12,6 @@
         android:theme="@style/AppTheme"
         tools:ignore="ExtraText">
         <activity
-            android:name=".ShoppingList"
-            android:label="@string/title_activity_shopping_list"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".Navigation"
             android:label="@string/title_activity_navigation"
             android:theme="@style/AppTheme.NoActionBar">
