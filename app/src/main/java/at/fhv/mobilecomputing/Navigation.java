@@ -113,6 +113,8 @@ public class Navigation extends AppCompatActivity
             ft.commit();
         }
 
+        setTitle(item.getTitle());
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
