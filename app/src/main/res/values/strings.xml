@@ -14,4 +14,5 @@
     <string name="title_button_add_new_shop">Add new shop</string>
     <string name="title_button_add_new_product">Add new product</string>
     <string name="title_button_add_new_standardlist">Add new standard list</string>
+    <string name="title_button_cancel">Cancel</string>
 </resources>

@@ -35,7 +35,7 @@
         fab:menu_colorNormal="#00C29F"
         fab:menu_colorPressed="#00C29F"
         fab:menu_colorRipple="#00C29F"
-        fab:menu_fab_label="Cancel"
+        fab:menu_fab_label="@string/title_button_cancel"
         fab:menu_labels_ellipsize="end"
         fab:menu_labels_singleLine="true">
 
