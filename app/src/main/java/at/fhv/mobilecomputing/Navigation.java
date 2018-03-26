@@ -133,4 +133,8 @@ public class Navigation extends AppCompatActivity
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
+
+    public void addProduct(View view) {
+        // TODO show fragment
+    }
 }
