@@ -17,6 +17,11 @@ import android.widget.ListView;
 
 import com.github.clans.fab.FloatingActionButton;
 
+import at.fhv.mobilecomputing.fragments.PurchaseHistoryFragment;
+import at.fhv.mobilecomputing.fragments.SettingsFragment;
+import at.fhv.mobilecomputing.fragments.ShoppingListFragment;
+import at.fhv.mobilecomputing.fragments.StandardListFragment;
+
 public class Navigation extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         SettingsFragment.OnFragmentInteractionListener,

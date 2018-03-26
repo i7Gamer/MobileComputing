@@ -1,4 +1,4 @@
-package at.fhv.mobilecomputing;
+package at.fhv.mobilecomputing.fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -7,29 +7,31 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+
+import at.fhv.mobilecomputing.R;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ShoppingListFragment.OnFragmentInteractionListener} interface
+ * {@link StandardListFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ShoppingListFragment#newInstance} factory method to
+ * Use the {@link StandardListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ShoppingListFragment extends Fragment {
+public class StandardListFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    ListView shoppingList;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
     private OnFragmentInteractionListener mListener;
 
-    public ShoppingListFragment() {
+    public StandardListFragment() {
         // Required empty public constructor
     }
 
@@ -39,11 +41,11 @@ public class ShoppingListFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ShoppingListFragment.
+     * @return A new instance of fragment StandardListFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ShoppingListFragment newInstance(String param1, String param2) {
-        ShoppingListFragment fragment = new ShoppingListFragment();
+    public static StandardListFragment newInstance(String param1, String param2) {
+        StandardListFragment fragment = new StandardListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,7 +66,7 @@ public class ShoppingListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_shopping_list, container, false);
+        return inflater.inflate(R.layout.fragment_standard_list, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
