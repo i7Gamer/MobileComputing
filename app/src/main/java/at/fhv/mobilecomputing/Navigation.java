@@ -1,6 +1,5 @@
 package at.fhv.mobilecomputing;
 
-import android.arch.persistence.room.Room;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -18,7 +17,6 @@ import android.widget.ListView;
 
 import com.github.clans.fab.FloatingActionButton;
 
-import at.fhv.mobilecomputing.database.AppDatabase;
 import at.fhv.mobilecomputing.fragments.PurchaseHistoryFragment;
 import at.fhv.mobilecomputing.fragments.SettingsFragment;
 import at.fhv.mobilecomputing.fragments.ShoppingListFragment;
@@ -37,31 +35,10 @@ public class Navigation extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        try {
-            Thread t = new Thread(new Runnable() {
-                public void run() {
-                    AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                            AppDatabase.class, "database-name").build();
-                    /*
-                    Item item = new Item();
-                    item.setName("Bier");
-                    item.setAmount("999");
-                    item.setDescription("Mohren");
-                    db.itemDAO().insertAll(item);
-                    */
-                }
-            }, "Thread A");
-            t.start();
-        } catch (NumberFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         FloatingActionButton fab = findViewById(R.id.fabAddProduct);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -82,19 +59,18 @@ public class Navigation extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        if (savedInstanceState == null) {
+            Fragment fragment = new ShoppingListFragment();
 
-        /*
-        String[] testdata = new String[]{"Apple", "Avocado", "Banana",
-                "Blueberry", "Coconut", "Durian", "Guava", "Kiwifruit",
-                "Jackfruit", "Mango", "Olive", "Pear", "Sugar-apple"};
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.nav_content, fragment);
+            ft.commit();
 
-        shoppingList = findViewById(R.id.MainShoppingList);
+            setTitle(getResources().getString(R.string.navigation_shoppinglist));
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1,
-                testdata);
-        shoppingList.setAdapter(adapter);
-        */
+            drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+        }
     }
 
     @Override

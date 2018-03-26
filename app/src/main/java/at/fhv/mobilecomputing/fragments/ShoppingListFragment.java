@@ -3,6 +3,8 @@ package at.fhv.mobilecomputing.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +12,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.List;
+
 import at.fhv.mobilecomputing.R;
+import at.fhv.mobilecomputing.database.AppDatabase;
+import at.fhv.mobilecomputing.database.entities.Item;
 
 
 /**
@@ -28,10 +34,6 @@ public class ShoppingListFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     ListView shoppingList;
-    String[] testdata = new String[]{"Apple", "Avocado", "Banana",
-            "Blueberry", "Coconut", "Durian", "Guava", "Kiwifruit",
-            "Jackfruit", "Mango", "Olive", "Pear", "Sugar-apple"};
-
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -67,12 +69,15 @@ public class ShoppingListFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_shopping_list, container, false);
     }
 
@@ -91,6 +96,24 @@ public class ShoppingListFragment extends Fragment {
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        shoppingList = view.findViewById(R.id.ShoppingList);
+
+        AppDatabase db = AppDatabase.getAppDatabase(getContext());
+        List<Item> items = db.itemDAO().getAll();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_list_item_1);
+        shoppingList.setAdapter(adapter);
+
+        for (Item item : items) {
+            adapter.add(item.getName());
         }
     }
 
