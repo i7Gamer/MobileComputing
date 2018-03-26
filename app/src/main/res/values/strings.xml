@@ -4,7 +4,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="navigation_shoppinglist">Shopping List</string>
-    <string name="navigation_standardlist">Standard List</string>
+    <string name="navigation_templates">Templates</string>
     <string name="navigation_purchase_history">Purchase History</string>
     <string name="navigation_settings">Settings</string>
 
@@ -13,6 +13,6 @@
 
     <string name="title_button_add_new_shop">Add new shop</string>
     <string name="title_button_add_new_product">Add new product</string>
-    <string name="title_button_add_new_standardlist">Add new standard list</string>
+    <string name="title_button_add_new_template">Add new template</string>
     <string name="title_button_cancel">Cancel</string>
 </resources>
