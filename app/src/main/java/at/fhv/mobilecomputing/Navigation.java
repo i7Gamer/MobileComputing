@@ -28,10 +28,10 @@ public class Navigation extends AppCompatActivity
         ShoppingListFragment.OnFragmentInteractionListener,
         PurchaseHistoryFragment.OnFragmentInteractionListener,
         StandardListFragment.OnFragmentInteractionListener
-
 {
 
     ListView shoppingList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +59,7 @@ public class Navigation extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
         /*
         String[] testdata = new String[]{"Apple", "Avocado", "Banana",
                 "Blueberry", "Coconut", "Durian", "Guava", "Kiwifruit",
@@ -71,7 +72,6 @@ public class Navigation extends AppCompatActivity
                 testdata);
         shoppingList.setAdapter(adapter);
         */
-
     }
 
     @Override

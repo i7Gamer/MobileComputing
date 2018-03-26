@@ -38,9 +38,9 @@
         android:padding="8dp"
         fab:menu_animationDelayPerItem="0"
         fab:menu_backgroundColor="#ccffffff"
-        fab:menu_colorNormal="#9C5D05"
-        fab:menu_colorPressed="#9C5D05"
-        fab:menu_colorRipple="#9C5D05"
+        fab:menu_colorNormal="#df9404"
+        fab:menu_colorPressed="#df9404"
+        fab:menu_colorRipple="#df9404"
         fab:menu_fab_label="Cancel"
         fab:menu_labels_ellipsize="end"
         fab:menu_labels_singleLine="true">
@@ -66,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/fab_add"
-            fab:fab_label="Subcategory"
+            fab:fab_label="@string/title_button_add_new_standardlist"
             fab:fab_size="mini" />
 
     </com.github.clans.fab.FloatingActionMenu>
