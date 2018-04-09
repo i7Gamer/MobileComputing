@@ -14,6 +14,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.github.clans.fab.FloatingActionMenu;
+
 import java.util.List;
 
 import at.fhv.mobilecomputing.R;
@@ -77,7 +79,6 @@ public class ShoppingListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         return inflater.inflate(R.layout.fragment_shopping_list, container, false);
     }
 
