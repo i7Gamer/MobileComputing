@@ -1,5 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,42 +6,42 @@
     tools:context="at.fhv.mobilecomputing.fragments.AddShop">
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/ShopNameLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:text="@string/shop_name"
         android:textColor="@android:color/black"
         android:textSize="18sp"
-        android:visibility="visible"
-        android:layout_margin="10dp"/>
+        android:visibility="visible" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/ShopNameText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:textColor="@android:color/black"
-        android:layout_margin="10dp"/>
+        android:textColor="@android:color/black" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/ShopAddressLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:text="@string/shop_address"
         android:textColor="@android:color/black"
         android:textSize="18sp"
-        android:visibility="visible"
-        android:layout_margin="10dp"/>
+        android:visibility="visible" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/ShopAddressText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:textColor="@android:color/black"
-        android:layout_margin="10dp"/>
+        android:textColor="@android:color/black" />
 
     <Button
         android:id="@+id/buttonAddShop"
