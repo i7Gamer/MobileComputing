@@ -65,28 +65,25 @@ public class AddShop extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Button addShop = getActivity().findViewById(R.id.buttonAddShop);
 
-        addShop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText shopName = getActivity().findViewById(R.id.ShopNameText);
-                EditText shopAddress = getActivity().findViewById(R.id.ShopAddressText);
+        addShop.setOnClickListener(v -> {
+            EditText shopName = getActivity().findViewById(R.id.ShopNameText);
+            EditText shopAddress = getActivity().findViewById(R.id.ShopAddressText);
 
-                AppDatabase appDatabase = AppDatabase.getAppDatabase(getContext());
+            AppDatabase appDatabase = AppDatabase.getAppDatabase(getContext());
 
-                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
-                if (appDatabase.shopDAO().findByName(shopName.getText().toString()) != null) {
-                    // TODO add to strings
-                    Snackbar.make(view, "Shop with this name already exists", Snackbar.LENGTH_LONG)
-                            .show();
-                } else {
-                    Shop newShop = new Shop();
-                    newShop.setName(shopName.getText().toString());
-                    newShop.setAddress(shopAddress.getText().toString());
-                    appDatabase.shopDAO().insertAll(newShop);
-                    getActivity().onBackPressed();
-                }
+            if (appDatabase.shopDAO().findByName(shopName.getText().toString()) != null) {
+                // TODO add to strings
+                Snackbar.make(view, "Shop with this name already exists", Snackbar.LENGTH_LONG)
+                        .show();
+            } else {
+                Shop newShop = new Shop();
+                newShop.setName(shopName.getText().toString());
+                newShop.setAddress(shopAddress.getText().toString());
+                appDatabase.shopDAO().insertAll(newShop);
+                getActivity().onBackPressed();
             }
         });
     }
