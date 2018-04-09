@@ -13,8 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.github.clans.fab.FloatingActionMenu;
-
 import java.util.List;
 
 import at.fhv.mobilecomputing.R;

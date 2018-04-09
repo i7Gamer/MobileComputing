@@ -11,7 +11,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -25,7 +24,7 @@ import at.fhv.mobilecomputing.fragments.PurchaseHistoryFragment;
 import at.fhv.mobilecomputing.fragments.SettingsFragment;
 import at.fhv.mobilecomputing.fragments.ShopDetailViewFragment;
 import at.fhv.mobilecomputing.fragments.ShoppingListFragment;
-import at.fhv.mobilecomputing.fragments.StandardListFragment;
+import at.fhv.mobilecomputing.fragments.TemplateListFragment;
 
 public class Navigation extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
@@ -34,7 +33,7 @@ public class Navigation extends AppCompatActivity implements
         PurchaseHistoryFragment.OnFragmentInteractionListener,
         AddShop.OnFragmentInteractionListener,
         AddProduct.OnFragmentInteractionListener,
-        StandardListFragment.OnFragmentInteractionListener,
+        TemplateListFragment.OnFragmentInteractionListener,
         ShopDetailViewFragment.OnFragmentInteractionListener
 {
 
@@ -166,7 +165,7 @@ public class Navigation extends AppCompatActivity implements
         if (id == R.id.nav_shoppinglist) {
             fragment = new ShoppingListFragment();
         } else if (id == R.id.nav_standardlist) {
-            fragment = new StandardListFragment();
+            fragment = new TemplateListFragment();
         } else if (id == R.id.nav_history) {
             fragment = new PurchaseHistoryFragment();
         } else if (id == R.id.nav_settings) {
