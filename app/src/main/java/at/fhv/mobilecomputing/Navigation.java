@@ -11,8 +11,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ListView;
 
 import com.github.clans.fab.FloatingActionButton;
 
@@ -45,7 +43,7 @@ public class Navigation extends AppCompatActivity implements
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -96,29 +94,23 @@ public class Navigation extends AppCompatActivity implements
         }
 
         //Listen to Add Product
-        final FloatingActionButton addProduct = (FloatingActionButton)findViewById(R.id.fabAddProduct);
-        addProduct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setTitle(getResources().getString(R.string.add_product));
-                Fragment fragment = new AddProduct();
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.nav_content, fragment);
-                ft.commit();
-            }
+        final FloatingActionButton addProduct = findViewById(R.id.fabAddProduct);
+        addProduct.setOnClickListener(view -> {
+            setTitle(getResources().getString(R.string.add_product));
+            Fragment fragment = new AddProduct();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.nav_content, fragment);
+            ft.commit();
         });
 
         //Listen to Add Shop
-        FloatingActionButton addShop = (FloatingActionButton)findViewById(R.id.fabAddShop);
-        addShop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setTitle(getResources().getString(R.string.add_shop));
-                Fragment fragment = new AddShop();
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.nav_content, fragment);
-                ft.commit();
-            }
+        FloatingActionButton addShop = findViewById(R.id.fabAddShop);
+        addShop.setOnClickListener(view -> {
+            setTitle(getResources().getString(R.string.add_shop));
+            Fragment fragment = new AddShop();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.nav_content, fragment);
+            ft.commit();
         });
     }
 
