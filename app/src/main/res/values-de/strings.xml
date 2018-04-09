@@ -16,4 +16,8 @@
     <string name="navigation_purchase_history">Einkaufsverlauf</string>
     <string name="navigation_settings">Einstellungen</string>
     <string name="title_button_cancel">Abbrechen</string>
+    <string name="shop_name">Shop Name</string>
+    <string name="add_shop">Shop hinzufügen</string>
+    <string name="add_product">Produkt hinzufügen</string>
+
 </resources>

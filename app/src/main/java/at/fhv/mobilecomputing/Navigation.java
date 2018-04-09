@@ -3,7 +3,6 @@ package at.fhv.mobilecomputing;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -20,23 +19,24 @@ import com.github.clans.fab.FloatingActionButton;
 import at.fhv.mobilecomputing.database.AppDatabase;
 import at.fhv.mobilecomputing.database.entities.Item;
 import at.fhv.mobilecomputing.database.entities.Shop;
+import at.fhv.mobilecomputing.fragments.AddProduct;
+import at.fhv.mobilecomputing.fragments.AddShop;
 import at.fhv.mobilecomputing.fragments.PurchaseHistoryFragment;
 import at.fhv.mobilecomputing.fragments.SettingsFragment;
 import at.fhv.mobilecomputing.fragments.ShopDetailViewFragment;
 import at.fhv.mobilecomputing.fragments.ShoppingListFragment;
 import at.fhv.mobilecomputing.fragments.StandardListFragment;
 
-public class Navigation extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,
+public class Navigation extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener,
         SettingsFragment.OnFragmentInteractionListener,
         ShoppingListFragment.OnFragmentInteractionListener,
         PurchaseHistoryFragment.OnFragmentInteractionListener,
+        AddShop.OnFragmentInteractionListener,
+        AddProduct.OnFragmentInteractionListener,
         StandardListFragment.OnFragmentInteractionListener,
         ShopDetailViewFragment.OnFragmentInteractionListener
 {
-
-    ListView shoppingList;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -45,17 +45,7 @@ public class Navigation extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fabAddProduct);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // test
-                Snackbar.make(view, "Message is restored!", Snackbar.LENGTH_SHORT).show();
-            }
-        });
-
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -104,6 +94,32 @@ public class Navigation extends AppCompatActivity
             drawer = findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
         }
+
+        //Listen to Add Product
+        final FloatingActionButton addProduct = (FloatingActionButton)findViewById(R.id.fabAddProduct);
+        addProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setTitle(getResources().getString(R.string.add_product));
+                Fragment fragment = new AddProduct();
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.nav_content, fragment);
+                ft.commit();
+            }
+        });
+
+        //Listen to Add Shop
+        FloatingActionButton addShop = (FloatingActionButton)findViewById(R.id.fabAddShop);
+        addShop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setTitle(getResources().getString(R.string.add_shop));
+                Fragment fragment = new AddShop();
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.nav_content, fragment);
+                ft.commit();
+            }
+        });
     }
 
     @Override
@@ -159,15 +175,9 @@ public class Navigation extends AppCompatActivity
 
     @Override
     public void onFragmentInteraction(Uri uri) {
-
     }
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
-
-    }
-
-    public void addProduct(View view) {
-        // TODO show fragment
     }
 }
