@@ -17,6 +17,7 @@ import android.widget.ListView;
 
 import com.github.clans.fab.FloatingActionButton;
 
+import at.fhv.mobilecomputing.fragments.AddShop;
 import at.fhv.mobilecomputing.fragments.PurchaseHistoryFragment;
 import at.fhv.mobilecomputing.fragments.SettingsFragment;
 import at.fhv.mobilecomputing.fragments.ShoppingListFragment;
@@ -27,7 +28,8 @@ public class Navigation extends AppCompatActivity
         SettingsFragment.OnFragmentInteractionListener,
         ShoppingListFragment.OnFragmentInteractionListener,
         PurchaseHistoryFragment.OnFragmentInteractionListener,
-        StandardListFragment.OnFragmentInteractionListener
+        StandardListFragment.OnFragmentInteractionListener,
+        AddShop.OnFragmentInteractionListener
 {
 
     ListView shoppingList;
@@ -49,6 +51,18 @@ public class Navigation extends AppCompatActivity
             }
         });
 
+        //Listen to Add Shop
+        FloatingActionButton addShop =  (FloatingActionButton)findViewById(R.id.fabAddShop);
+        addShop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setTitle(getResources().getString(R.string.add_shop));
+                Fragment fragment = new AddShop();
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.nav_content, fragment);
+                ft.commit();
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -92,6 +106,8 @@ public class Navigation extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -123,6 +139,8 @@ public class Navigation extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 
     @Override
     public void onFragmentInteraction(Uri uri) {

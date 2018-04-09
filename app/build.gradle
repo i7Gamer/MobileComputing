@@ -30,6 +30,7 @@ android {
 }
 
 
+
 dependencies {
     // MUST be at top to prevent errors (getter/setter missing)
     compileOnly 'org.projectlombok:lombok:1.16.20'
