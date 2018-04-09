@@ -18,4 +18,5 @@
     <string name="title_button_cancel">Abbrechen</string>
     <string name="shop_name">Shop Name</string>
     <string name="add_shop">Shop hinzufügen</string>
+    <string name="shop_address">Shop Adresse</string>
 </resources>

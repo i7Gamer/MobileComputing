@@ -32,7 +32,7 @@ public class AddShop extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public AddShop() {
-        // Required empty public constructor
+
     }
 
     /**
