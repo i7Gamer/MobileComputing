@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 import at.fhv.mobilecomputing.database.AppDatabase;
 import at.fhv.mobilecomputing.database.entities.Item;
@@ -35,6 +36,9 @@ public class Navigation extends AppCompatActivity implements
         StandardListFragment.OnFragmentInteractionListener,
         ShopDetailViewFragment.OnFragmentInteractionListener
 {
+
+    String lastTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -42,6 +46,7 @@ public class Navigation extends AppCompatActivity implements
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -86,6 +91,7 @@ public class Navigation extends AppCompatActivity implements
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.nav_content, fragment);
             ft.commit();
+            lastTitle = getResources().getString(R.string.title_activity_shopping_list);
 
             setTitle(getResources().getString(R.string.navigation_shoppinglist));
 
@@ -96,20 +102,26 @@ public class Navigation extends AppCompatActivity implements
         //Listen to Add Product
         final FloatingActionButton addProduct = findViewById(R.id.fabAddProduct);
         addProduct.setOnClickListener(view -> {
+            FloatingActionMenu floatingActionMenu = findViewById(R.id.floatingMenu);
+            floatingActionMenu.close(true);
             setTitle(getResources().getString(R.string.add_product));
             Fragment fragment = new AddProduct();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.nav_content, fragment);
+            ft.addToBackStack(null);
             ft.commit();
         });
 
         //Listen to Add Shop
         FloatingActionButton addShop = findViewById(R.id.fabAddShop);
         addShop.setOnClickListener(view -> {
+            FloatingActionMenu floatingActionMenu = findViewById(R.id.floatingMenu);
+            floatingActionMenu.close(true);
             setTitle(getResources().getString(R.string.add_shop));
             Fragment fragment = new AddShop();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.nav_content, fragment);
+            ft.addToBackStack(null);
             ft.commit();
         });
     }
@@ -122,6 +134,8 @@ public class Navigation extends AppCompatActivity implements
         } else {
             super.onBackPressed();
         }
+
+        setTitle(lastTitle);
     }
 
     @Override
@@ -141,7 +155,6 @@ public class Navigation extends AppCompatActivity implements
 
         Fragment fragment = null;
         Bundle bundle = new Bundle();
-
         if (id == R.id.nav_shoppinglist) {
             fragment = new ShoppingListFragment();
         } else if (id == R.id.nav_standardlist) {
@@ -157,6 +170,8 @@ public class Navigation extends AppCompatActivity implements
             ft.replace(R.id.nav_content, fragment);
             ft.commit();
         }
+
+        lastTitle = item.getTitle().toString();
 
         setTitle(item.getTitle());
 
