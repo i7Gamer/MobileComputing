@@ -16,7 +16,8 @@
     <string name="title_button_add_new_template">Add new template</string>
     <string name="title_button_cancel">Cancel</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="shop_name">Shop name</string>
     <string name="add_shop">Add Shop</string>
+
+    <string name="add_product">Add Product</string>
 </resources>

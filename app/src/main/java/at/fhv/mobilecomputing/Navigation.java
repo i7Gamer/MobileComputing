@@ -17,23 +17,22 @@ import android.widget.ListView;
 
 import com.github.clans.fab.FloatingActionButton;
 
+import at.fhv.mobilecomputing.fragments.AddProduct;
 import at.fhv.mobilecomputing.fragments.AddShop;
 import at.fhv.mobilecomputing.fragments.PurchaseHistoryFragment;
 import at.fhv.mobilecomputing.fragments.SettingsFragment;
 import at.fhv.mobilecomputing.fragments.ShoppingListFragment;
 import at.fhv.mobilecomputing.fragments.StandardListFragment;
 
-public class Navigation extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,
+public class Navigation extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener,
         SettingsFragment.OnFragmentInteractionListener,
         ShoppingListFragment.OnFragmentInteractionListener,
         PurchaseHistoryFragment.OnFragmentInteractionListener,
         StandardListFragment.OnFragmentInteractionListener,
-        AddShop.OnFragmentInteractionListener
+        AddShop.OnFragmentInteractionListener,
+        AddProduct.OnFragmentInteractionListener
 {
-
-    ListView shoppingList;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -41,28 +40,6 @@ public class Navigation extends AppCompatActivity
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = findViewById(R.id.fabAddProduct);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // test
-                Snackbar.make(view, "Message is restored!", Snackbar.LENGTH_SHORT).show();
-            }
-        });
-
-        //Listen to Add Shop
-        FloatingActionButton addShop =  (FloatingActionButton)findViewById(R.id.fabAddShop);
-        addShop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setTitle(getResources().getString(R.string.add_shop));
-                Fragment fragment = new AddShop();
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.nav_content, fragment);
-                ft.commit();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -85,6 +62,32 @@ public class Navigation extends AppCompatActivity
             drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
         }
+
+        //Listen to Add Product
+        final FloatingActionButton addProduct = (FloatingActionButton)findViewById(R.id.fabAddProduct);
+        addProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setTitle(getResources().getString(R.string.add_product));
+                Fragment fragment = new AddProduct();
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.nav_content, fragment);
+                ft.commit();
+            }
+        });
+
+        //Listen to Add Shop
+        FloatingActionButton addShop = (FloatingActionButton)findViewById(R.id.fabAddShop);
+        addShop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setTitle(getResources().getString(R.string.add_shop));
+                Fragment fragment = new AddShop();
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.nav_content, fragment);
+                ft.commit();
+            }
+        });
     }
 
     @Override
@@ -105,8 +108,6 @@ public class Navigation extends AppCompatActivity
         int id = item.getItemId();
         return super.onOptionsItemSelected(item);
     }
-
-
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -140,19 +141,11 @@ public class Navigation extends AppCompatActivity
         return true;
     }
 
-
-
     @Override
     public void onFragmentInteraction(Uri uri) {
-
     }
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
-
-    }
-
-    public void addProduct(View view) {
-        // TODO show fragment
     }
 }
