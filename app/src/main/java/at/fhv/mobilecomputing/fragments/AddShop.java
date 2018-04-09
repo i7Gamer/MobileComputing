@@ -1,14 +1,23 @@
 package at.fhv.mobilecomputing.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
 
 import at.fhv.mobilecomputing.R;
+import at.fhv.mobilecomputing.database.AppDatabase;
+import at.fhv.mobilecomputing.database.entities.Shop;
 
 
 /**
@@ -32,7 +41,6 @@ public class AddShop extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public AddShop() {
-
     }
 
     /**
@@ -51,6 +59,33 @@ public class AddShop extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        Button addShop = getActivity().findViewById(R.id.buttonAddShop);
+
+        addShop.setOnClickListener(v -> {
+            EditText shopName = getActivity().findViewById(R.id.ShopNameText);
+            EditText shopAddress = getActivity().findViewById(R.id.ShopAddressText);
+
+            AppDatabase appDatabase = AppDatabase.getAppDatabase(getContext());
+
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+            if (appDatabase.shopDAO().findByName(shopName.getText().toString()) != null) {
+                // TODO add to strings
+                Snackbar.make(view, "Shop with this name already exists", Snackbar.LENGTH_LONG)
+                        .show();
+            } else {
+                Shop newShop = new Shop();
+                newShop.setName(shopName.getText().toString());
+                newShop.setAddress(shopAddress.getText().toString());
+                appDatabase.shopDAO().insertAll(newShop);
+                getActivity().onBackPressed();
+            }
+        });
     }
 
     @Override
