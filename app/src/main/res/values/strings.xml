@@ -18,6 +18,6 @@
 
     <string name="shop_name">Shop name</string>
     <string name="add_shop">Add Shop</string>
-
+    <string name="shop_address">Shop address</string>
     <string name="add_product">Add Product</string>
 </resources>
