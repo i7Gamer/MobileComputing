@@ -22,7 +22,7 @@ public interface TemplateItemDAO {
     @Query("SELECT * FROM templateItems WHERE id IN (:templateItemIds)")
     List<TemplateItem> loadAllByIds(int[] templateItemIds);
 
-    @Query("SELECT * FROM templateItems WHERE name LIKE '%' + :name + '%'")
+    @Query("SELECT * FROM templateItems WHERE name = :name")
     TemplateItem findByName(String name);
 
     @Insert

@@ -13,12 +13,7 @@ import lombok.NoArgsConstructor;
  * Created by timorzipa on 26.03.18.
  */
 
-@Entity(tableName = "items",
-        foreignKeys = {
-                @ForeignKey(entity = Shop.class, parentColumns = "id", childColumns = "shopId"),
-                @ForeignKey(entity = Purchase.class, parentColumns = "id", childColumns = "purchaseId")
-        }
-)
+@Entity(tableName = "items")
 @Data
 @NoArgsConstructor
 public class Item {
@@ -38,10 +33,12 @@ public class Item {
     private String amount;
 
     @ColumnInfo(name = "shopId")
-    private String shopId;
+    @ForeignKey(entity = Shop.class, parentColumns = "id", childColumns = "shopId")
+    private int shopId;
 
     @ColumnInfo(name = "purchaseId")
-    private String purchaseId;
+    @ForeignKey(entity = Purchase.class, parentColumns = "id", childColumns = "purchaseId")
+    private int purchaseId;
 
     @ColumnInfo(name = "dueDate")
     private String dueDate;

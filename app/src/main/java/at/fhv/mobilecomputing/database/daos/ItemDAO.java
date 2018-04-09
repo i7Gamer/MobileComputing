@@ -22,7 +22,7 @@ public interface ItemDAO {
     @Query("SELECT * FROM items WHERE id IN (:itemIds)")
     List<Item> loadAllByIds(int[] itemIds);
 
-    @Query("SELECT * FROM items WHERE name LIKE '%' + :name + '%'")
+    @Query("SELECT * FROM items WHERE name = :name")
     Item findByName(String name);
 
     @Insert

@@ -12,12 +12,7 @@ import lombok.NoArgsConstructor;
 /**
  * Created by timorzipa on 26.03.18.
  */
-@Entity(tableName = "templateItems",
-        foreignKeys = {
-                @ForeignKey(entity = Shop.class, parentColumns = "id", childColumns = "shopId"),
-                @ForeignKey(entity = Template.class, parentColumns = "id", childColumns = "templateId")
-        }
-)
+@Entity(tableName = "templateItems")
 @Data
 @NoArgsConstructor
 public class TemplateItem {
@@ -26,11 +21,13 @@ public class TemplateItem {
     private int id;
 
     @NonNull
+    @ForeignKey(entity = Template.class, parentColumns = "id", childColumns = "templateId")
     @ColumnInfo(name = "templateId")
-    private String templateId;
+    private int templateId;
 
+    @ForeignKey(entity = Shop.class, parentColumns = "id", childColumns = "shopId")
     @ColumnInfo(name = "shopId")
-    private String shopId;
+    private int shopId;
 
     @NonNull
     @lombok.NonNull

@@ -17,8 +17,12 @@ import android.widget.ListView;
 
 import com.github.clans.fab.FloatingActionButton;
 
+import at.fhv.mobilecomputing.database.AppDatabase;
+import at.fhv.mobilecomputing.database.entities.Item;
+import at.fhv.mobilecomputing.database.entities.Shop;
 import at.fhv.mobilecomputing.fragments.PurchaseHistoryFragment;
 import at.fhv.mobilecomputing.fragments.SettingsFragment;
+import at.fhv.mobilecomputing.fragments.ShopDetailViewFragment;
 import at.fhv.mobilecomputing.fragments.ShoppingListFragment;
 import at.fhv.mobilecomputing.fragments.StandardListFragment;
 
@@ -27,7 +31,8 @@ public class Navigation extends AppCompatActivity
         SettingsFragment.OnFragmentInteractionListener,
         ShoppingListFragment.OnFragmentInteractionListener,
         PurchaseHistoryFragment.OnFragmentInteractionListener,
-        StandardListFragment.OnFragmentInteractionListener
+        StandardListFragment.OnFragmentInteractionListener,
+        ShopDetailViewFragment.OnFragmentInteractionListener
 {
 
     ListView shoppingList;
@@ -37,7 +42,7 @@ public class Navigation extends AppCompatActivity
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = findViewById(R.id.fabAddProduct);
@@ -50,14 +55,42 @@ public class Navigation extends AppCompatActivity
         });
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // insert test data
+
+        AppDatabase appDatabase = AppDatabase.getAppDatabase(getApplicationContext());
+
+        for (Shop s : appDatabase.shopDAO().getAll()) {
+            appDatabase.shopDAO().delete(s);
+        }
+        for (Item i : appDatabase.itemDAO().getAll()) {
+            appDatabase.itemDAO().delete(i);
+        }
+
+        if (appDatabase.shopDAO().findByName("Spar") == null) {
+            Shop shop = new Shop();
+            shop.setName("Spar");
+            shop.setAddress("Bregenz");
+            appDatabase.shopDAO().insertAll(shop);
+        }
+
+        if (appDatabase.itemDAO().findByName("Mohren") == null) {
+            Item item = new Item();
+            item.setName("Mohren");
+            item.setDescription("Bier");
+            item.setAmount("999");
+            Shop shop = appDatabase.shopDAO().getAll().get(0);
+            item.setShopId(shop.getId());
+            appDatabase.itemDAO().insertAll(item);
+        }
 
         if (savedInstanceState == null) {
             Fragment fragment = new ShoppingListFragment();
@@ -68,14 +101,14 @@ public class Navigation extends AppCompatActivity
 
             setTitle(getResources().getString(R.string.navigation_shoppinglist));
 
-            drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer = findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
         }
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -119,7 +152,7 @@ public class Navigation extends AppCompatActivity
 
         setTitle(item.getTitle());
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
