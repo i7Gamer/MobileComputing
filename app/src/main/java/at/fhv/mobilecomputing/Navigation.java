@@ -140,6 +140,9 @@ public class Navigation extends AppCompatActivity implements
             super.onBackPressed();
         }
 
+        FloatingActionMenu floatingActionMenu = findViewById(R.id.floatingMenu);
+        floatingActionMenu.showMenuButton(true);
+
         setTitle(lastTitle);
     }
 
