@@ -22,7 +22,7 @@ public interface ShopDAO {
     @Query("SELECT * FROM shops WHERE id IN (:shopId)")
     List<Shop> loadAllByIds(int[] shopId);
 
-    @Query("SELECT * FROM shops WHERE name LIKE '%' + :name + '%'")
+    @Query("SELECT * FROM shops WHERE shops.name = :name")
     Shop findByName(String name);
 
     @Insert

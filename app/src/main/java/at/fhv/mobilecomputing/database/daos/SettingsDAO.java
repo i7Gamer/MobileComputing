@@ -19,7 +19,7 @@ public interface SettingsDAO {
     @Query("SELECT * FROM settings")
     List<Setting> getAll();
 
-    @Query("SELECT * FROM settings WHERE `key` = :key")
+    @Query("SELECT * FROM settings WHERE settings.`key` = :key")
     List<Setting> loadAllByKeys(String key);
 
     @Insert

@@ -22,7 +22,7 @@ import at.fhv.mobilecomputing.database.entities.TemplateItem;
  * Created by timorzipa on 26.03.18.
  */
 
-@Database(entities = {Item.class, Purchase.class, Setting.class, Shop.class, Template.class, TemplateItem.class}, version = 1)
+@Database(entities = {Item.class, Purchase.class, Setting.class, Shop.class, Template.class, TemplateItem.class}, version = 3)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
@@ -34,6 +34,7 @@ public abstract class AppDatabase extends RoomDatabase {
                             // allow queries on the main thread.
                             // Don't do this on a real app! See PersistenceBasicSample for an example.
                             .allowMainThreadQueries()
+                            .fallbackToDestructiveMigration()
                             .build();
         }
         return INSTANCE;
