@@ -10,10 +10,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+
+import java.util.List;
 
 import at.fhv.mobilecomputing.database.AppDatabase;
 import at.fhv.mobilecomputing.database.entities.Item;
@@ -35,6 +38,9 @@ public class Navigation extends AppCompatActivity implements
         PurchaseHistoryFragment.OnFragmentInteractionListener,
         AddShop.OnFragmentInteractionListener,
         AddProduct.OnFragmentInteractionListener,
+        StandardListFragment.OnFragmentInteractionListener,
+        ShopDetailViewFragment.OnFragmentInteractionListener,
+        DeleteDialog.DeleteDialogListener,
         AddTemplate.OnFragmentInteractionListener,
         TemplateListFragment.OnFragmentInteractionListener,
         TemplateItemsFragment.OnFragmentInteractionListener,
@@ -42,6 +48,7 @@ public class Navigation extends AppCompatActivity implements
 {
 
     String lastTitle;
+    private static final String SHOPPING_LIST_FRAGMENT_TAG = "shoppingListFragment";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,5 +217,36 @@ public class Navigation extends AppCompatActivity implements
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
+    }
+
+    @Override
+    public void onDialogDeleteClick(DeleteDialog dialog) {
+        Shop shop = dialog.getShopToDelete();
+        List<Item> items = dialog.getItemsToDelete();
+
+        if (items != null && !items.isEmpty()) {
+            for (Item i : items) {
+                AppDatabase.getAppDatabase(getApplicationContext()).itemDAO().delete(i);
+            }
+        }
+
+        if (shop != null) {
+            shop.setDeleted(true);
+            AppDatabase.getAppDatabase(getApplicationContext()).shopDAO().updateAll(shop);
+        }
+
+        ShoppingListFragment shoppingListFragment = dialog.getShoppinglistFragment();
+
+        // Check if the tab fragment is available
+        if (shoppingListFragment != null) {
+
+            // Call your method in the TabFragment
+            shoppingListFragment.updateData();
+        }
+    }
+
+    @Override
+    public void onDialogCancelClick(DeleteDialog dialog) {
+        Log.i("deleteDialog", "cancel pressed");
     }
 }

@@ -20,7 +20,12 @@
     <string name="add_shop">Add Shop</string>
     <string name="shop_address">Shop address</string>
     <string name="add_product">Add Product</string>
-
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="deleteShopMessageContainingItems1">Do you really want to delete that shop? It still contains</string>
+    <string name="deleteShopMessageContainingItems2">unbought items.</string>
+    <string name="deleteShopMessage">Do you really want to delete this shop?</string>
     <string name="navigation_template">Template</string>
     <string name="template_name">Template name</string>
     <string name="add_template">Add Template</string>
