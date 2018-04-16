@@ -52,5 +52,4 @@
         android:textColor="@android:color/black"
         android:visibility="visible" />
 
-
 </LinearLayout>
