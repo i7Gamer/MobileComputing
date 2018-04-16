@@ -21,6 +21,8 @@ import java.util.List;
 import at.fhv.mobilecomputing.database.AppDatabase;
 import at.fhv.mobilecomputing.database.entities.Item;
 import at.fhv.mobilecomputing.database.entities.Shop;
+import at.fhv.mobilecomputing.database.entities.Template;
+import at.fhv.mobilecomputing.database.entities.TemplateItem;
 import at.fhv.mobilecomputing.fragments.DeleteDialog;
 import at.fhv.mobilecomputing.fragments.History.PurchaseHistoryFragment;
 import at.fhv.mobilecomputing.fragments.Product.AddProduct;
@@ -227,26 +229,43 @@ public class Navigation extends AppCompatActivity implements
     @Override
     public void onDialogDeleteClick(DeleteDialog dialog) {
         Shop shop = dialog.getShopToDelete();
-        List<Item> items = dialog.getItemsToDelete();
+        List<Item> shopItems = dialog.getShopItemsToDelete();
 
-        if (items != null && !items.isEmpty()) {
-            for (Item i : items) {
-                AppDatabase.getAppDatabase(getApplicationContext()).itemDAO().delete(i);
-            }
-        }
+        Template template = dialog.getTemplateToDelete();
+        List<TemplateItem> templateItems = dialog.getTemplateItemsToDelete();
 
         if (shop != null) {
+            if (shopItems != null && !shopItems.isEmpty()) {
+                for (Item i : shopItems) {
+                    AppDatabase.getAppDatabase(getApplicationContext()).itemDAO().delete(i);
+                }
+            }
+
             shop.setDeleted(true);
             AppDatabase.getAppDatabase(getApplicationContext()).shopDAO().updateAll(shop);
+
+            ShoppingListFragment shoppingListFragment = dialog.getShoppinglistFragment();
+            // Check if the tab fragment is available
+            if (shoppingListFragment != null) {
+                // Call your method in the TabFragment
+                shoppingListFragment.updateData();
+            }
         }
+        if (template != null) {
+            if (templateItems != null && !templateItems.isEmpty()) {
+                for (TemplateItem t : templateItems) {
+                    AppDatabase.getAppDatabase(getApplicationContext()).templateItemDAO().delete(t);
+                }
+            }
 
-        ShoppingListFragment shoppingListFragment = dialog.getShoppinglistFragment();
+            AppDatabase.getAppDatabase(getApplicationContext()).templateDAO().delete(template);
 
-        // Check if the tab fragment is available
-        if (shoppingListFragment != null) {
-
-            // Call your method in the TabFragment
-            shoppingListFragment.updateData();
+            TemplateListFragment templateListFragment = dialog.getTemplateListFragment();
+            // Check if the tab fragment is available
+            if (templateListFragment != null) {
+                // Call your method in the TabFragment
+                templateListFragment.updateData();
+            }
         }
     }
 

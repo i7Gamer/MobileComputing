@@ -17,7 +17,6 @@ import android.widget.EditText;
 
 import at.fhv.mobilecomputing.R;
 import at.fhv.mobilecomputing.database.AppDatabase;
-import at.fhv.mobilecomputing.database.entities.Shop;
 import at.fhv.mobilecomputing.database.entities.Template;
 
 /**

@@ -15,7 +15,10 @@ import java.util.List;
 import at.fhv.mobilecomputing.R;
 import at.fhv.mobilecomputing.database.entities.Item;
 import at.fhv.mobilecomputing.database.entities.Shop;
+import at.fhv.mobilecomputing.database.entities.Template;
+import at.fhv.mobilecomputing.database.entities.TemplateItem;
 import at.fhv.mobilecomputing.fragments.Shop.ShoppingListFragment;
+import at.fhv.mobilecomputing.fragments.Template.TemplateListFragment;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -40,10 +43,20 @@ public class DeleteDialog extends DialogFragment {
     private Shop shopToDelete;
     @Getter
     @Setter
-    private List<Item> itemsToDelete;
+    private List<Item> shopItemsToDelete;
+    @Getter
+    @Setter
+    private Template templateToDelete;
+    @Getter
+    @Setter
+    private List<TemplateItem> templateItemsToDelete;
     @Getter
     @Setter
     private ShoppingListFragment shoppinglistFragment;
+    @Getter
+    @Setter
+    private TemplateListFragment templateListFragment;
+
     private DeleteDialogListener mListener;
 
     public DeleteDialog() {
