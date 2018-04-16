@@ -1,4 +1,4 @@
-package at.fhv.mobilecomputing.fragments;
+package at.fhv.mobilecomputing.fragments.Shop;
 
 import android.content.Context;
 import android.net.Uri;
@@ -20,6 +20,7 @@ import at.fhv.mobilecomputing.R;
 import at.fhv.mobilecomputing.database.AppDatabase;
 import at.fhv.mobilecomputing.database.entities.Item;
 import at.fhv.mobilecomputing.database.entities.Shop;
+import at.fhv.mobilecomputing.fragments.Product.ShopDetailViewFragment;
 
 
 /**
@@ -84,7 +85,6 @@ public class ShoppingListFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_shopping_list, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);

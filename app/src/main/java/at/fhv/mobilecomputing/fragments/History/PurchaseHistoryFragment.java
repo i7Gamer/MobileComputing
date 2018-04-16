@@ -1,34 +1,25 @@
-package at.fhv.mobilecomputing.fragments;
+package at.fhv.mobilecomputing.fragments.History;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
 
 import at.fhv.mobilecomputing.R;
-import at.fhv.mobilecomputing.database.AppDatabase;
-import at.fhv.mobilecomputing.database.entities.Shop;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link AddShop.OnFragmentInteractionListener} interface
+ * {@link PurchaseHistoryFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link AddShop#newInstance} factory method to
+ * Use the {@link PurchaseHistoryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddShop extends Fragment {
+public class PurchaseHistoryFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -40,7 +31,8 @@ public class AddShop extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public AddShop() {
+    public PurchaseHistoryFragment() {
+        // Required empty public constructor
     }
 
     /**
@@ -49,43 +41,16 @@ public class AddShop extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AddShop.
+     * @return A new instance of fragment PurchaseHistoryFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AddShop newInstance(String param1, String param2) {
-        AddShop fragment = new AddShop();
+    public static PurchaseHistoryFragment newInstance(String param1, String param2) {
+        PurchaseHistoryFragment fragment = new PurchaseHistoryFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Button addShop = getActivity().findViewById(R.id.buttonAddShop);
-
-        addShop.setOnClickListener(v -> {
-            EditText shopName = getActivity().findViewById(R.id.ShopNameText);
-            EditText shopAddress = getActivity().findViewById(R.id.ShopAddressText);
-
-            AppDatabase appDatabase = AppDatabase.getAppDatabase(getContext());
-
-            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-
-            if (appDatabase.shopDAO().findByName(shopName.getText().toString()) != null) {
-                // TODO add to strings
-                Snackbar.make(view, "Shop with this name already exists", Snackbar.LENGTH_LONG)
-                        .show();
-            } else {
-                Shop newShop = new Shop();
-                newShop.setName(shopName.getText().toString());
-                newShop.setAddress(shopAddress.getText().toString());
-                appDatabase.shopDAO().insertAll(newShop);
-                getActivity().onBackPressed();
-            }
-        });
     }
 
     @Override
@@ -101,7 +66,7 @@ public class AddShop extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_shop, container, false);
+        return inflater.inflate(R.layout.fragment_purchase_history, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
