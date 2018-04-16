@@ -21,11 +21,12 @@ import java.util.List;
 import at.fhv.mobilecomputing.database.AppDatabase;
 import at.fhv.mobilecomputing.database.entities.Item;
 import at.fhv.mobilecomputing.database.entities.Shop;
-import at.fhv.mobilecomputing.fragments.Product.AddProduct;
-import at.fhv.mobilecomputing.fragments.Shop.AddShop;
+import at.fhv.mobilecomputing.fragments.DeleteDialog;
 import at.fhv.mobilecomputing.fragments.History.PurchaseHistoryFragment;
-import at.fhv.mobilecomputing.fragments.Settings.SettingsFragment;
+import at.fhv.mobilecomputing.fragments.Product.AddProduct;
 import at.fhv.mobilecomputing.fragments.Product.ShopDetailViewFragment;
+import at.fhv.mobilecomputing.fragments.Settings.SettingsFragment;
+import at.fhv.mobilecomputing.fragments.Shop.AddShop;
 import at.fhv.mobilecomputing.fragments.Shop.ShoppingListFragment;
 import at.fhv.mobilecomputing.fragments.Template.AddTemplate;
 import at.fhv.mobilecomputing.fragments.Template.TemplateItemsFragment;
@@ -38,13 +39,11 @@ public class Navigation extends AppCompatActivity implements
         PurchaseHistoryFragment.OnFragmentInteractionListener,
         AddShop.OnFragmentInteractionListener,
         AddProduct.OnFragmentInteractionListener,
-        StandardListFragment.OnFragmentInteractionListener,
         ShopDetailViewFragment.OnFragmentInteractionListener,
         DeleteDialog.DeleteDialogListener,
         AddTemplate.OnFragmentInteractionListener,
         TemplateListFragment.OnFragmentInteractionListener,
-        TemplateItemsFragment.OnFragmentInteractionListener,
-        ShopDetailViewFragment.OnFragmentInteractionListener
+        TemplateItemsFragment.OnFragmentInteractionListener
 {
 
     String lastTitle;

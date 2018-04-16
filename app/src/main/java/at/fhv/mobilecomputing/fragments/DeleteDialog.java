@@ -15,6 +15,7 @@ import java.util.List;
 import at.fhv.mobilecomputing.R;
 import at.fhv.mobilecomputing.database.entities.Item;
 import at.fhv.mobilecomputing.database.entities.Shop;
+import at.fhv.mobilecomputing.fragments.Shop.ShoppingListFragment;
 import lombok.Getter;
 import lombok.Setter;
 

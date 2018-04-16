@@ -20,6 +20,7 @@ import at.fhv.mobilecomputing.R;
 import at.fhv.mobilecomputing.database.AppDatabase;
 import at.fhv.mobilecomputing.database.entities.Item;
 import at.fhv.mobilecomputing.database.entities.Shop;
+import at.fhv.mobilecomputing.fragments.DeleteDialog;
 import at.fhv.mobilecomputing.fragments.Product.ShopDetailViewFragment;
 
 
