@@ -14,12 +14,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import at.fhv.mobilecomputing.R;
 import at.fhv.mobilecomputing.database.AppDatabase;
 import at.fhv.mobilecomputing.database.entities.Template;
 import at.fhv.mobilecomputing.database.entities.TemplateItem;
-import at.fhv.mobilecomputing.fragments.Shop.ShoppingListFragment;
+import at.fhv.mobilecomputing.fragments.DeleteDialog;
 
 
 /**
@@ -32,6 +33,7 @@ import at.fhv.mobilecomputing.fragments.Shop.ShoppingListFragment;
  */
 public class TemplateListFragment extends Fragment {
     ListView templateNameList;
+    List<Template> templates;
 
     private OnFragmentInteractionListener mListener;
 
@@ -83,6 +85,36 @@ public class TemplateListFragment extends Fragment {
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         });
+
+        templateNameList.setOnItemLongClickListener((parent, view1, arg2, arg3) -> {
+            Template templateToDelete = templates.get(arg2);
+            List<TemplateItem> templateItemsToDelete = AppDatabase.getAppDatabase(getContext()).templateItemDAO().getAll().stream().filter(i -> i.getTemplateId() == templateToDelete.getId()).collect(Collectors.toList());
+
+            DeleteDialog deleteDialog = DeleteDialog.newInstance(getResources().getString(R.string.deleteTemplateMessage));
+
+            deleteDialog.setTemplateItemsToDelete(templateItemsToDelete);
+            deleteDialog.setTemplateToDelete(templateToDelete);
+
+            deleteDialog.setTemplateListFragment(this);
+            assert getFragmentManager() != null;
+            deleteDialog.show(getFragmentManager(), "DeleteDialogFragment");
+
+            return true;
+        });
+    }
+
+    public void updateData() {
+        AppDatabase db = AppDatabase.getAppDatabase(getContext());
+        templates = db.templateDAO().getAll();
+
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_list_item_1);
+
+        templateNameList.setAdapter(adapter);
+
+        for (Template template: templates) {
+            adapter.add(template.getName());
+        }
     }
 
     @Override

@@ -138,7 +138,7 @@ public class ShoppingListFragment extends Fragment {
                 deleteDialog = DeleteDialog.newInstance(getResources().getString(R.string.deleteShopMessage));
             }
 
-            deleteDialog.setItemsToDelete(toDeleteShopItems);
+            deleteDialog.setShopItemsToDelete(toDeleteShopItems);
             deleteDialog.setShopToDelete(shopToDelete);
             deleteDialog.setShoppinglistFragment(this);
 
