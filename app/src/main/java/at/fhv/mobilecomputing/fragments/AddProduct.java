@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,17 +22,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import at.fhv.mobilecomputing.R;
+import at.fhv.mobilecomputing.database.AppDatabase;
+import at.fhv.mobilecomputing.database.entities.Item;
+import at.fhv.mobilecomputing.database.entities.Shop;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,6 +61,7 @@ public class AddProduct extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private List<Shop> spinnerArray =  new ArrayList<>();
 
     private OnFragmentInteractionListener mListener;
 
@@ -168,6 +178,44 @@ public class AddProduct extends Fragment {
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
+        });
+
+
+        AppDatabase appDatabase = AppDatabase.getAppDatabase(getContext());
+        spinnerArray = new ArrayList<>();
+        spinnerArray = appDatabase.shopDAO().getAll();
+        List<String> spinnerArrayStrings = new ArrayList<>();
+        for(Shop shop : spinnerArray) {
+            spinnerArrayStrings.add(shop.getName());
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spinnerArrayStrings);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Spinner sItems = (Spinner) getActivity().findViewById(R.id.spinner);
+        sItems.setAdapter(adapter);
+
+        Button addProduct = getActivity().findViewById(R.id.buttonAddProduct);
+        addProduct.setOnClickListener(v -> {
+            EditText productName = getActivity().findViewById(R.id.editTextProductName);
+            EditText description = getActivity().findViewById(R.id.editTextDescription);
+            EditText amount = getActivity().findViewById(R.id.editTextAmount);
+            EditText dueDate = getActivity().findViewById(R.id.editTextDueDate);
+            Spinner shop = getActivity().findViewById(R.id.spinner);
+            ImageView imageView = getView().findViewById(R.id.imageViewProduct);
+
+            Item newProduct = new Item();
+            newProduct.setName(productName.getText().toString());
+            newProduct.setDescription(description.getText().toString());
+            newProduct.setAmount(amount.getText().toString());
+            newProduct.setDueDate(dueDate.getText().toString());
+            String selectedShop = shop.getSelectedItem().toString();
+            Shop selShop = spinnerArray.stream().filter(shopName -> selectedShop.equals(shopName.getName())).findFirst().orElse(null);
+            newProduct.setShopId(selShop.getId());
+            Bitmap bm =((BitmapDrawable)imageView.getDrawable()).getBitmap();
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            bm.compress(Bitmap.CompressFormat.PNG, 100, bos);
+            newProduct.setPicture(bos.toByteArray());
+            appDatabase.itemDAO().insertAll(newProduct);
+            getActivity().onBackPressed();
         });
     }
 
