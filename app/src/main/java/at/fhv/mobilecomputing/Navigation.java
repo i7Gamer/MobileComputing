@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -47,6 +48,8 @@ public class Navigation extends AppCompatActivity implements
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        FloatingActionMenu menu = findViewById(R.id.floatingMenu);
+        menu.showMenuButton(true);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -103,7 +106,8 @@ public class Navigation extends AppCompatActivity implements
         final FloatingActionButton addProduct = findViewById(R.id.fabAddProduct);
         addProduct.setOnClickListener(view -> {
             FloatingActionMenu floatingActionMenu = findViewById(R.id.floatingMenu);
-            floatingActionMenu.close(true);
+            floatingActionMenu.hideMenuButton(true);
+
             setTitle(getResources().getString(R.string.add_product));
             Fragment fragment = new AddProduct();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -116,7 +120,8 @@ public class Navigation extends AppCompatActivity implements
         FloatingActionButton addShop = findViewById(R.id.fabAddShop);
         addShop.setOnClickListener(view -> {
             FloatingActionMenu floatingActionMenu = findViewById(R.id.floatingMenu);
-            floatingActionMenu.close(true);
+            floatingActionMenu.hideMenuButton(true);
+
             setTitle(getResources().getString(R.string.add_shop));
             Fragment fragment = new AddShop();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -134,6 +139,9 @@ public class Navigation extends AppCompatActivity implements
         } else {
             super.onBackPressed();
         }
+
+        FloatingActionMenu floatingActionMenu = findViewById(R.id.floatingMenu);
+        floatingActionMenu.showMenuButton(true);
 
         setTitle(lastTitle);
     }
