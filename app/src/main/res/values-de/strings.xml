@@ -20,5 +20,10 @@
     <string name="add_shop">Shop hinzufügen</string>
     <string name="shop_address">Shop Adresse</string>
     <string name="add_product">Produkt hinzufügen</string>
-  
+    <string name="delete">Löschen</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="deleteShopMessageContainingItems1">"Shop wirklich löschen? Er beinhaltet noch "</string>
+    <string name="deleteShopMessageContainingItems2">nicht gekaufte Produkte.</string>
+    <string name="deleteShopMessage">Shop wirklich löschen?</string>
+
 </resources>

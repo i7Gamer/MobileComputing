@@ -13,12 +13,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.github.clans.fab.FloatingActionMenu;
-
 import java.util.List;
+import java.util.stream.Collectors;
 
 import at.fhv.mobilecomputing.R;
 import at.fhv.mobilecomputing.database.AppDatabase;
+import at.fhv.mobilecomputing.database.entities.Item;
 import at.fhv.mobilecomputing.database.entities.Shop;
 
 
@@ -37,7 +37,10 @@ public class ShoppingListFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     ListView shoppingList;
+    List<Shop> shops;
 
+    Shop shopToDelete;
+    List<Item> toDeleteShopItems;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -105,16 +108,7 @@ public class ShoppingListFragment extends Fragment {
 
         shoppingList = view.findViewById(R.id.ShoppingList);
 
-        AppDatabase db = AppDatabase.getAppDatabase(getContext());
-        List<Shop> shops = db.shopDAO().getAll();
-
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_list_item_1);
-        shoppingList.setAdapter(adapter);
-
-        for (Shop shop : shops) {
-            adapter.add(shop.getName());
-        }
+        updateData();
 
         shoppingList.setOnItemClickListener((parent, view1, position, id) -> {
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
@@ -127,6 +121,46 @@ public class ShoppingListFragment extends Fragment {
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         });
+
+        shoppingList.setOnItemLongClickListener((parent, view1, arg2, arg3) -> {
+            shopToDelete = shops.get(arg2);
+            toDeleteShopItems = AppDatabase.getAppDatabase(getContext())
+                    .itemDAO().getAll().stream().filter(i -> i.getPurchaseId() == 0 &&
+                            i.getShopId() == shopToDelete.getId()).collect(Collectors.toList());
+
+            DeleteDialog deleteDialog;
+            if (toDeleteShopItems.size() > 0) {
+
+                deleteDialog = DeleteDialog.newInstance(getResources().getString(R.string.deleteShopMessageContainingItems1)
+                        + toDeleteShopItems.size() + getResources().getString(R.string.deleteShopMessageContainingItems2));
+            } else {
+                deleteDialog = DeleteDialog.newInstance(getResources().getString(R.string.deleteShopMessage));
+            }
+
+            deleteDialog.setItemsToDelete(toDeleteShopItems);
+            deleteDialog.setShopToDelete(shopToDelete);
+            deleteDialog.setShoppinglistFragment(this);
+
+            assert getFragmentManager() != null;
+            deleteDialog.show(getFragmentManager(), "DeleteDialogFragment");
+
+            return true;
+        });
+    }
+
+    public void updateData() {
+        AppDatabase db = AppDatabase.getAppDatabase(getContext());
+        shops = db.shopDAO().getAll();
+
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_list_item_1);
+        shoppingList.setAdapter(adapter);
+
+        for (Shop shop : shops) {
+            if (shop.isDeleted() == false) {
+                adapter.add(shop.getName());
+            }
+        }
     }
 
     @Override
@@ -134,7 +168,6 @@ public class ShoppingListFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
-
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
