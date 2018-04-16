@@ -47,7 +47,6 @@ public class Navigation extends AppCompatActivity implements
 {
 
     String lastTitle;
-    private static final String SHOPPING_LIST_FRAGMENT_TAG = "shoppingListFragment";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +92,13 @@ public class Navigation extends AppCompatActivity implements
             item.setDescription("Bier");
             item.setAmount("999");
             Shop shop = appDatabase.shopDAO().getAll().get(0);
+            item.setShopId(shop.getId());
+            appDatabase.itemDAO().insertAll(item);
+
+            item = new Item();
+            item.setName("Fohren");
+            item.setDescription("Bier");
+            item.setAmount("999");
             item.setShopId(shop.getId());
             appDatabase.itemDAO().insertAll(item);
         }
