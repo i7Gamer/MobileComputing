@@ -24,7 +24,7 @@ import at.fhv.mobilecomputing.fragments.PurchaseHistoryFragment;
 import at.fhv.mobilecomputing.fragments.SettingsFragment;
 import at.fhv.mobilecomputing.fragments.ShopDetailViewFragment;
 import at.fhv.mobilecomputing.fragments.ShoppingListFragment;
-import at.fhv.mobilecomputing.fragments.TemplateListFragment;
+import at.fhv.mobilecomputing.fragments.Template.TemplateListFragment;
 
 public class Navigation extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,

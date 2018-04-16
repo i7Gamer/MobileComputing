@@ -1,4 +1,4 @@
-package at.fhv.mobilecomputing.fragments;
+package at.fhv.mobilecomputing.fragments.Template;
 
 import android.content.Context;
 import android.net.Uri;
@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -81,13 +80,6 @@ public class TemplateListFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_template_list, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -103,13 +95,13 @@ public class TemplateListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        templateNameList = view.findViewById(R.id.TemplateList);
-
         AppDatabase db = AppDatabase.getAppDatabase(getContext());
         List<Template> templates = db.templateDAO().getAll();
 
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_list_item_1);
+
+        templateNameList = view.findViewById(R.id.TemplateList);
         templateNameList.setAdapter(adapter);
 
         for (Template template : templates) {
