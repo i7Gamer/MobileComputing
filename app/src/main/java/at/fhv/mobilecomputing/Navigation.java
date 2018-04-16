@@ -18,12 +18,12 @@ import com.github.clans.fab.FloatingActionMenu;
 import at.fhv.mobilecomputing.database.AppDatabase;
 import at.fhv.mobilecomputing.database.entities.Item;
 import at.fhv.mobilecomputing.database.entities.Shop;
-import at.fhv.mobilecomputing.fragments.AddProduct;
-import at.fhv.mobilecomputing.fragments.AddShop;
-import at.fhv.mobilecomputing.fragments.PurchaseHistoryFragment;
-import at.fhv.mobilecomputing.fragments.SettingsFragment;
-import at.fhv.mobilecomputing.fragments.ShopDetailViewFragment;
-import at.fhv.mobilecomputing.fragments.ShoppingListFragment;
+import at.fhv.mobilecomputing.fragments.Product.AddProduct;
+import at.fhv.mobilecomputing.fragments.Shop.AddShop;
+import at.fhv.mobilecomputing.fragments.History.PurchaseHistoryFragment;
+import at.fhv.mobilecomputing.fragments.Settings.SettingsFragment;
+import at.fhv.mobilecomputing.fragments.Product.ShopDetailViewFragment;
+import at.fhv.mobilecomputing.fragments.Shop.ShoppingListFragment;
 import at.fhv.mobilecomputing.fragments.Template.TemplateListFragment;
 
 public class Navigation extends AppCompatActivity implements
