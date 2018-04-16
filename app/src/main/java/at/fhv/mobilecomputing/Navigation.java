@@ -96,6 +96,13 @@ public class Navigation extends AppCompatActivity implements
             Shop shop = appDatabase.shopDAO().getAll().get(0);
             item.setShopId(shop.getId());
             appDatabase.itemDAO().insertAll(item);
+
+            item = new Item();
+            item.setName("Fohren");
+            item.setDescription("Bier");
+            item.setAmount("999");
+            item.setShopId(shop.getId());
+            appDatabase.itemDAO().insertAll(item);
         }
 
         if (savedInstanceState == null) {
