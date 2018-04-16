@@ -13,7 +13,6 @@
 
     <string name="navigation_shoppinglist">Shoppingliste</string>
     <string name="navigation_templates">Vorlagen</string>
-    <string name="navigation_template">Vorlage</string>
     <string name="navigation_purchase_history">Einkaufsverlauf</string>
     <string name="navigation_settings">Einstellungen</string>
     <string name="title_button_cancel">Abbrechen</string>
@@ -21,5 +20,9 @@
     <string name="add_shop">Shop hinzufügen</string>
     <string name="shop_address">Shop Adresse</string>
     <string name="add_product">Produkt hinzufügen</string>
+
+    <string name="navigation_template">Vorlage</string>
+    <string name="template_name">Vorlage</string>
+    <string name="add_template">Vorlage hinzufügen</string>
   
 </resources>

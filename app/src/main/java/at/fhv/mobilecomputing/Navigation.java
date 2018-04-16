@@ -24,6 +24,7 @@ import at.fhv.mobilecomputing.fragments.History.PurchaseHistoryFragment;
 import at.fhv.mobilecomputing.fragments.Settings.SettingsFragment;
 import at.fhv.mobilecomputing.fragments.Product.ShopDetailViewFragment;
 import at.fhv.mobilecomputing.fragments.Shop.ShoppingListFragment;
+import at.fhv.mobilecomputing.fragments.Template.AddTemplate;
 import at.fhv.mobilecomputing.fragments.Template.TemplateItemsFragment;
 import at.fhv.mobilecomputing.fragments.Template.TemplateListFragment;
 
@@ -34,6 +35,7 @@ public class Navigation extends AppCompatActivity implements
         PurchaseHistoryFragment.OnFragmentInteractionListener,
         AddShop.OnFragmentInteractionListener,
         AddProduct.OnFragmentInteractionListener,
+        AddTemplate.OnFragmentInteractionListener,
         TemplateListFragment.OnFragmentInteractionListener,
         TemplateItemsFragment.OnFragmentInteractionListener,
         ShopDetailViewFragment.OnFragmentInteractionListener
@@ -125,6 +127,20 @@ public class Navigation extends AppCompatActivity implements
 
             setTitle(getResources().getString(R.string.add_shop));
             Fragment fragment = new AddShop();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.nav_content, fragment);
+            ft.addToBackStack(null);
+            ft.commit();
+        });
+
+        //Listen to Add Template
+        FloatingActionButton addTemplate = findViewById(R.id.fabAddTemplate);
+        addTemplate.setOnClickListener(view -> {
+            FloatingActionMenu floatingActionMenu = findViewById(R.id.floatingMenu);
+            floatingActionMenu.hideMenuButton(true);
+
+            setTitle(getResources().getString(R.string.add_template));
+            Fragment fragment = new AddTemplate();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.nav_content, fragment);
             ft.addToBackStack(null);
