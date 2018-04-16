@@ -10,22 +10,29 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
+import java.util.List;
+
 import at.fhv.mobilecomputing.database.AppDatabase;
 import at.fhv.mobilecomputing.database.entities.Item;
 import at.fhv.mobilecomputing.database.entities.Shop;
-import at.fhv.mobilecomputing.fragments.AddProduct;
-import at.fhv.mobilecomputing.fragments.AddShop;
-import at.fhv.mobilecomputing.fragments.PurchaseHistoryFragment;
-import at.fhv.mobilecomputing.fragments.SettingsFragment;
-import at.fhv.mobilecomputing.fragments.ShopDetailViewFragment;
-import at.fhv.mobilecomputing.fragments.ShoppingListFragment;
-import at.fhv.mobilecomputing.fragments.StandardListFragment;
+import at.fhv.mobilecomputing.database.entities.Template;
+import at.fhv.mobilecomputing.database.entities.TemplateItem;
+import at.fhv.mobilecomputing.fragments.DeleteDialog;
+import at.fhv.mobilecomputing.fragments.History.PurchaseHistoryFragment;
+import at.fhv.mobilecomputing.fragments.Product.AddProduct;
+import at.fhv.mobilecomputing.fragments.Product.ShopDetailViewFragment;
+import at.fhv.mobilecomputing.fragments.Settings.SettingsFragment;
+import at.fhv.mobilecomputing.fragments.Shop.AddShop;
+import at.fhv.mobilecomputing.fragments.Shop.ShoppingListFragment;
+import at.fhv.mobilecomputing.fragments.Template.AddTemplate;
+import at.fhv.mobilecomputing.fragments.Template.TemplateItemsFragment;
+import at.fhv.mobilecomputing.fragments.Template.TemplateListFragment;
 
 public class Navigation extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
@@ -34,8 +41,11 @@ public class Navigation extends AppCompatActivity implements
         PurchaseHistoryFragment.OnFragmentInteractionListener,
         AddShop.OnFragmentInteractionListener,
         AddProduct.OnFragmentInteractionListener,
-        StandardListFragment.OnFragmentInteractionListener,
-        ShopDetailViewFragment.OnFragmentInteractionListener
+        ShopDetailViewFragment.OnFragmentInteractionListener,
+        DeleteDialog.DeleteDialogListener,
+        AddTemplate.OnFragmentInteractionListener,
+        TemplateListFragment.OnFragmentInteractionListener,
+        TemplateItemsFragment.OnFragmentInteractionListener
 {
 
     String lastTitle;
@@ -86,6 +96,13 @@ public class Navigation extends AppCompatActivity implements
             Shop shop = appDatabase.shopDAO().getAll().get(0);
             item.setShopId(shop.getId());
             appDatabase.itemDAO().insertAll(item);
+
+            item = new Item();
+            item.setName("Fohren");
+            item.setDescription("Bier");
+            item.setAmount("999");
+            item.setShopId(shop.getId());
+            appDatabase.itemDAO().insertAll(item);
         }
 
         if (savedInstanceState == null) {
@@ -129,6 +146,20 @@ public class Navigation extends AppCompatActivity implements
             ft.addToBackStack(null);
             ft.commit();
         });
+
+        //Listen to Add Template
+        FloatingActionButton addTemplate = findViewById(R.id.fabAddTemplate);
+        addTemplate.setOnClickListener(view -> {
+            FloatingActionMenu floatingActionMenu = findViewById(R.id.floatingMenu);
+            floatingActionMenu.hideMenuButton(true);
+
+            setTitle(getResources().getString(R.string.add_template));
+            Fragment fragment = new AddTemplate();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.nav_content, fragment);
+            ft.addToBackStack(null);
+            ft.commit();
+        });
     }
 
     @Override
@@ -166,7 +197,7 @@ public class Navigation extends AppCompatActivity implements
         if (id == R.id.nav_shoppinglist) {
             fragment = new ShoppingListFragment();
         } else if (id == R.id.nav_standardlist) {
-            fragment = new StandardListFragment();
+            fragment = new TemplateListFragment();
         } else if (id == R.id.nav_history) {
             fragment = new PurchaseHistoryFragment();
         } else if (id == R.id.nav_settings) {
@@ -180,7 +211,6 @@ public class Navigation extends AppCompatActivity implements
         }
 
         lastTitle = item.getTitle().toString();
-
         setTitle(item.getTitle());
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -194,5 +224,53 @@ public class Navigation extends AppCompatActivity implements
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
+    }
+
+    @Override
+    public void onDialogDeleteClick(DeleteDialog dialog) {
+        Shop shop = dialog.getShopToDelete();
+        List<Item> shopItems = dialog.getShopItemsToDelete();
+
+        Template template = dialog.getTemplateToDelete();
+        List<TemplateItem> templateItems = dialog.getTemplateItemsToDelete();
+
+        if (shop != null) {
+            if (shopItems != null && !shopItems.isEmpty()) {
+                for (Item i : shopItems) {
+                    AppDatabase.getAppDatabase(getApplicationContext()).itemDAO().delete(i);
+                }
+            }
+
+            shop.setDeleted(true);
+            AppDatabase.getAppDatabase(getApplicationContext()).shopDAO().updateAll(shop);
+
+            ShoppingListFragment shoppingListFragment = dialog.getShoppinglistFragment();
+            // Check if the tab fragment is available
+            if (shoppingListFragment != null) {
+                // Call your method in the TabFragment
+                shoppingListFragment.updateData();
+            }
+        }
+        if (template != null) {
+            if (templateItems != null && !templateItems.isEmpty()) {
+                for (TemplateItem t : templateItems) {
+                    AppDatabase.getAppDatabase(getApplicationContext()).templateItemDAO().delete(t);
+                }
+            }
+
+            AppDatabase.getAppDatabase(getApplicationContext()).templateDAO().delete(template);
+
+            TemplateListFragment templateListFragment = dialog.getTemplateListFragment();
+            // Check if the tab fragment is available
+            if (templateListFragment != null) {
+                // Call your method in the TabFragment
+                templateListFragment.updateData();
+            }
+        }
+    }
+
+    @Override
+    public void onDialogCancelClick(DeleteDialog dialog) {
+        Log.i("deleteDialog", "cancel pressed");
     }
 }

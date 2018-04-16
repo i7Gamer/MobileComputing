@@ -3,19 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="at.fhv.mobilecomputing.fragments.Product.ShopDetailViewFragment">
+    tools:context="at.fhv.mobilecomputing.fragments.Template.TemplateListFragment">
 
     <ListView
-        android:id="@+id/ProductList"
+        android:id="@+id/TemplateList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:entries="@mipmap/ic_launcher"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </FrameLayout>

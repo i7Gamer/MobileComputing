@@ -26,4 +26,15 @@
     <string name="add_product_shop">Shop</string>
     <string name="add_product_duedate">Due date</string>
     <string name="add_product_picture">Add picture</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="deleteShopMessageContainingItems1">"Do you really want to delete that shop? It still contains "</string>
+    <string name="deleteShopMessageContainingItems2">" unbought items."</string>
+    <string name="deleteShopMessage">Do you really want to delete this shop?</string>
+    <string name="deleteTemplateMessage">Do you really want to delete this template?</string>
+    <string name="navigation_template">Template</string>
+    <string name="template_name">Template name</string>
+    <string name="add_template">Add Template</string>
 </resources>
