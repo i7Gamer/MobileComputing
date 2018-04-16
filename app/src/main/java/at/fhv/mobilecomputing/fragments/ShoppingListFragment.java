@@ -10,9 +10,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.github.clans.fab.FloatingActionMenu;
 
 import java.util.List;
 
@@ -77,7 +78,6 @@ public class ShoppingListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         return inflater.inflate(R.layout.fragment_shopping_list, container, false);
     }
 
@@ -116,19 +116,16 @@ public class ShoppingListFragment extends Fragment {
             adapter.add(shop.getName());
         }
 
-        shoppingList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        shoppingList.setOnItemClickListener((parent, view1, position, id) -> {
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
-                String selectedItem = (String) shoppingList.getAdapter().getItem(position);
-                Shop shop = AppDatabase.getAppDatabase(getContext()).shopDAO().findByName(selectedItem);
+            String selectedItem = (String) shoppingList.getAdapter().getItem(position);
+            Shop shop = AppDatabase.getAppDatabase(getContext()).shopDAO().findByName(selectedItem);
 
-                ShopDetailViewFragment shopDetailViewFragment = ShopDetailViewFragment.newInstance(shop.getId());
-                fragmentTransaction.replace(R.id.nav_content, shopDetailViewFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
+            ShopDetailViewFragment shopDetailViewFragment = ShopDetailViewFragment.newInstance(shop.getId());
+            fragmentTransaction.replace(R.id.nav_content, shopDetailViewFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
         });
     }
 

@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 import at.fhv.mobilecomputing.R;
 import at.fhv.mobilecomputing.database.AppDatabase;
 import at.fhv.mobilecomputing.database.entities.Item;
+import at.fhv.mobilecomputing.database.entities.Shop;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,6 +38,7 @@ public class ShopDetailViewFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private int shopId;
+    private Shop shop;
     private OnFragmentInteractionListener mListener;
 
     public ShopDetailViewFragment() {
@@ -65,6 +67,10 @@ public class ShopDetailViewFragment extends Fragment {
         if (getArguments() != null) {
             shopId = getArguments().getInt(ARG_SHOP);
         }
+        shop = AppDatabase.getAppDatabase(getContext()).shopDAO().getAll().stream().filter(s -> s.getId() == shopId).findFirst().get();
+
+        // TODO get string from resources
+        this.getActivity().setTitle("Details for shop " + shop.getName());
     }
 
     @Override
