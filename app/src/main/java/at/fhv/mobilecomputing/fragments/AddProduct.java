@@ -213,7 +213,7 @@ public class AddProduct extends Fragment {
             Bitmap bm =((BitmapDrawable)imageView.getDrawable()).getBitmap();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             bm.compress(Bitmap.CompressFormat.PNG, 100, bos);
-            newProduct.setPicture(bos.toByteArray());
+            //newProduct.setPicture(bos.toByteArray());
             appDatabase.itemDAO().insertAll(newProduct);
             getActivity().onBackPressed();
         });
