@@ -10,19 +10,23 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
+import java.util.List;
+
 import at.fhv.mobilecomputing.database.AppDatabase;
 import at.fhv.mobilecomputing.database.entities.Item;
 import at.fhv.mobilecomputing.database.entities.Shop;
-import at.fhv.mobilecomputing.fragments.Product.AddProduct;
-import at.fhv.mobilecomputing.fragments.Shop.AddShop;
+import at.fhv.mobilecomputing.fragments.DeleteDialog;
 import at.fhv.mobilecomputing.fragments.History.PurchaseHistoryFragment;
-import at.fhv.mobilecomputing.fragments.Settings.SettingsFragment;
+import at.fhv.mobilecomputing.fragments.Product.AddProduct;
 import at.fhv.mobilecomputing.fragments.Product.ShopDetailViewFragment;
+import at.fhv.mobilecomputing.fragments.Settings.SettingsFragment;
+import at.fhv.mobilecomputing.fragments.Shop.AddShop;
 import at.fhv.mobilecomputing.fragments.Shop.ShoppingListFragment;
 import at.fhv.mobilecomputing.fragments.Template.AddTemplate;
 import at.fhv.mobilecomputing.fragments.Template.TemplateItemsFragment;
@@ -35,13 +39,15 @@ public class Navigation extends AppCompatActivity implements
         PurchaseHistoryFragment.OnFragmentInteractionListener,
         AddShop.OnFragmentInteractionListener,
         AddProduct.OnFragmentInteractionListener,
+        ShopDetailViewFragment.OnFragmentInteractionListener,
+        DeleteDialog.DeleteDialogListener,
         AddTemplate.OnFragmentInteractionListener,
         TemplateListFragment.OnFragmentInteractionListener,
-        TemplateItemsFragment.OnFragmentInteractionListener,
-        ShopDetailViewFragment.OnFragmentInteractionListener
+        TemplateItemsFragment.OnFragmentInteractionListener
 {
 
     String lastTitle;
+    private static final String SHOPPING_LIST_FRAGMENT_TAG = "shoppingListFragment";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,5 +216,36 @@ public class Navigation extends AppCompatActivity implements
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
+    }
+
+    @Override
+    public void onDialogDeleteClick(DeleteDialog dialog) {
+        Shop shop = dialog.getShopToDelete();
+        List<Item> items = dialog.getItemsToDelete();
+
+        if (items != null && !items.isEmpty()) {
+            for (Item i : items) {
+                AppDatabase.getAppDatabase(getApplicationContext()).itemDAO().delete(i);
+            }
+        }
+
+        if (shop != null) {
+            shop.setDeleted(true);
+            AppDatabase.getAppDatabase(getApplicationContext()).shopDAO().updateAll(shop);
+        }
+
+        ShoppingListFragment shoppingListFragment = dialog.getShoppinglistFragment();
+
+        // Check if the tab fragment is available
+        if (shoppingListFragment != null) {
+
+            // Call your method in the TabFragment
+            shoppingListFragment.updateData();
+        }
+    }
+
+    @Override
+    public void onDialogCancelClick(DeleteDialog dialog) {
+        Log.i("deleteDialog", "cancel pressed");
     }
 }

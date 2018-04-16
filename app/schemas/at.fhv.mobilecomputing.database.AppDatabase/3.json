@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "b43f96a6d10257f50b5b929d615d5630",
+    "identityHash": "900fc9e883ef2bb9cdacd62d5d330f5c",
     "entities": [
       {
         "tableName": "items",
@@ -126,7 +126,7 @@
       },
       {
         "tableName": "shops",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `address` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `address` TEXT, `deleted` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -145,6 +145,12 @@
             "columnName": "address",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "deleted",
+            "columnName": "deleted",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -241,7 +247,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"b43f96a6d10257f50b5b929d615d5630\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"900fc9e883ef2bb9cdacd62d5d330f5c\")"
     ]
   }
 }

@@ -28,4 +28,7 @@ public class Shop {
 
     @ColumnInfo(name = "address")
     private String address;
+
+    @ColumnInfo(name = "deleted")
+    private boolean deleted;
 }
