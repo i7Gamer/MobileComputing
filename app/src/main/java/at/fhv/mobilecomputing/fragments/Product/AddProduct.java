@@ -1,22 +1,16 @@
 package at.fhv.mobilecomputing.fragments.Product;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -210,9 +204,11 @@ public class AddProduct extends Fragment {
             String selectedShop = shop.getSelectedItem().toString();
             Shop selShop = spinnerArray.stream().filter(shopName -> selectedShop.equals(shopName.getName())).findFirst().orElse(null);
             newProduct.setShopId(selShop.getId());
-            Bitmap bm =((BitmapDrawable)imageView.getDrawable()).getBitmap();
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            bm.compress(Bitmap.CompressFormat.PNG, 100, bos);
+            if (imageView.getDrawable() != null) {
+                Bitmap bm = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                bm.compress(Bitmap.CompressFormat.PNG, 100, bos);
+            }
             //newProduct.setPicture(bos.toByteArray());
             appDatabase.itemDAO().insertAll(newProduct);
             getActivity().onBackPressed();
