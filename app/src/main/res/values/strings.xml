@@ -20,4 +20,10 @@
     <string name="add_shop">Add Shop</string>
     <string name="shop_address">Shop address</string>
     <string name="add_product">Add Product</string>
+    <string name="add_product_name">Product name</string>
+    <string name="add_product_description">Description</string>
+    <string name="add_product_amount">Amount</string>
+    <string name="add_product_shop">Shop</string>
+    <string name="add_product_duedate">Due date</string>
+    <string name="add_product_picture">Add picture</string>
 </resources>

@@ -20,5 +20,11 @@
     <string name="add_shop">Shop hinzufügen</string>
     <string name="shop_address">Shop Adresse</string>
     <string name="add_product">Produkt hinzufügen</string>
-  
+    <string name="add_product_name">Produktname</string>
+    <string name="add_product_description">Beschreibung</string>
+    <string name="add_product_shop">Shop</string>
+    <string name="add_product_duedate">Fälligkeitsdatum</string>
+    <string name="add_product_amount">Menge</string>
+    <string name="add_product_picture">Bild hinzufügen</string>
+
 </resources>

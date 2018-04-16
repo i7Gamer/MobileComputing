@@ -1,13 +1,134 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="at.fhv.mobilecomputing.fragments.AddProduct">
+    android:orientation="vertical"
+    tools:context="at.fhv.mobilecomputing.fragments.AddProduct"
+    >
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="" />
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_product_name"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:layout_margin="5dp"/>
 
-</FrameLayout>
+            <EditText
+                android:id="@+id/editText1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_margin="5dp"/>
+
+            <TextView
+                android:id="@+id/textViewDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_product_description"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:layout_margin="5dp"/>
+
+            <EditText
+                android:id="@+id/editTextDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_margin="5dp"/>/
+
+            <TextView
+                android:id="@+id/textViewAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_product_amount"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:layout_margin="5dp"/>
+
+            <EditText
+                android:id="@+id/editTextAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_margin="5dp"/>
+
+            <TextView
+                android:id="@+id/textViewShop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_product_shop"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:layout_margin="5dp"/>
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="5dp" />
+
+            <TextView
+                android:id="@+id/textViewDueDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_product_duedate"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:layout_margin="5dp"/>
+
+            <EditText
+                android:id="@+id/editTextDueDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_margin="5dp"/>
+
+            <TextView
+                android:id="@+id/textViewPicture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_product_picture"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:layout_margin="5dp"/>
+
+            <ImageView
+                android:id="@+id/imageViewProduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@android:color/darker_gray"
+                android:maxHeight="100dp"
+                android:maxWidth="100dp"
+                android:minHeight="100dp"
+                android:minWidth="100dp" />
+
+            <ImageButton
+                android:id="@+id/buttonAddImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_menu_camera" />
+
+            <Button
+                android:id="@+id/buttonAddProduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/add_product" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+
