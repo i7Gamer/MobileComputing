@@ -5,6 +5,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="navigation_shoppinglist">Shopping List</string>
     <string name="navigation_templates">Templates</string>
+    <string name="navigation_template">Template</string>
     <string name="navigation_purchase_history">Purchase History</string>
     <string name="navigation_settings">Settings</string>
 

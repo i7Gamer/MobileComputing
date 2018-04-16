@@ -24,6 +24,7 @@ import at.fhv.mobilecomputing.fragments.History.PurchaseHistoryFragment;
 import at.fhv.mobilecomputing.fragments.Settings.SettingsFragment;
 import at.fhv.mobilecomputing.fragments.Product.ShopDetailViewFragment;
 import at.fhv.mobilecomputing.fragments.Shop.ShoppingListFragment;
+import at.fhv.mobilecomputing.fragments.Template.TemplateItemsFragment;
 import at.fhv.mobilecomputing.fragments.Template.TemplateListFragment;
 
 public class Navigation extends AppCompatActivity implements
@@ -34,6 +35,7 @@ public class Navigation extends AppCompatActivity implements
         AddShop.OnFragmentInteractionListener,
         AddProduct.OnFragmentInteractionListener,
         TemplateListFragment.OnFragmentInteractionListener,
+        TemplateItemsFragment.OnFragmentInteractionListener,
         ShopDetailViewFragment.OnFragmentInteractionListener
 {
 
@@ -179,7 +181,6 @@ public class Navigation extends AppCompatActivity implements
         }
 
         lastTitle = item.getTitle().toString();
-
         setTitle(item.getTitle());
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
