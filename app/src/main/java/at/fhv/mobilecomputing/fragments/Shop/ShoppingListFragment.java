@@ -11,9 +11,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import at.fhv.mobilecomputing.R;
@@ -155,15 +162,31 @@ public class ShoppingListFragment extends Fragment {
         AppDatabase db = AppDatabase.getAppDatabase(getContext());
         shops = db.shopDAO().getAll();
 
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_list_item_1);
-        shoppingList.setAdapter(adapter);
+        final ListAdapter listAdapter = createListAdapter(shops);
+        shoppingList.setAdapter(listAdapter);
+    }
 
-        for (Shop shop : shops) {
-            if (shop.isDeleted() == false) {
-                adapter.add(shop.getName());
-            }
+    private ListAdapter createListAdapter(final List<Shop> shops) {
+        final String[] fromMapKey = new String[] {"name", "address"};
+        final int[] toLayoutId = new int[] {android.R.id.text1, android.R.id.text2};
+        final List<Map<String, String>> list = convertToListItems(shops);
+
+        return new SimpleAdapter(getContext(), list,
+                android.R.layout.simple_list_item_2,
+                fromMapKey, toLayoutId);
+    }
+
+    private List<Map<String, String>> convertToListItems(final List<Shop> shops) {
+        final List<Map<String, String>> listItem =
+                new ArrayList<Map<String, String>>(shops.size());
+
+        for (final Shop shop: shops) {
+            final Map<String, String> listItemMap = new HashMap<>();
+            listItemMap.put("name", shop.getName());
+            listItemMap.put("address", shop.getAddress());
+            listItem.add(Collections.unmodifiableMap(listItemMap));
         }
+        return Collections.unmodifiableList(listItem);
     }
 
     @Override
