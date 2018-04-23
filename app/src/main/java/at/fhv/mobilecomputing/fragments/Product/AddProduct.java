@@ -90,29 +90,9 @@ public class AddProduct extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_product, container, false);
-        view.findViewById(R.id.buttonAddImage).setOnClickListener(view1 -> startGallery());
-
         return view;
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //super method removed
-        if (resultCode == -1) {
-            if (requestCode == 1000) {
-                Uri returnUri = data.getData();
-                try {
-                    Bitmap bitmapImage = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), returnUri);
-
-                    ImageView imageView = getActivity().findViewById(R.id.imageViewProduct);
-                    imageView.setImageBitmap(bitmapImage);
-                    imageView.setMaxHeight(300);
-                } catch (IOException e) {
-
-                }
-            }
-        }
-    }
     private void startGallery() {
         Intent cameraIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         cameraIntent.setType("image/*");
