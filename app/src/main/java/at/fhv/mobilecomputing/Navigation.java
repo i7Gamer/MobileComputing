@@ -60,8 +60,9 @@ public class Navigation extends AppCompatActivity implements
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionMenu menu = findViewById(R.id.floatingMenu);
-        menu.showMenuButton(true);
+        FloatingActionMenu shopFloatingMenu = findViewById(R.id.shopFloatingMenu);
+        FloatingActionMenu templateFloatingMenu = findViewById(R.id.templateFloatingMenu);
+        shopFloatingMenu.showMenuButton(true);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -122,9 +123,9 @@ public class Navigation extends AppCompatActivity implements
         }
 
         //Listen to Add Product
-        final FloatingActionButton addProduct = findViewById(R.id.fabAddProduct);
+        FloatingActionButton addProduct = findViewById(R.id.fabAddProduct);
         addProduct.setOnClickListener(view -> {
-            FloatingActionMenu floatingActionMenu = findViewById(R.id.floatingMenu);
+            FloatingActionMenu floatingActionMenu = findViewById(R.id.shopFloatingMenu);
             floatingActionMenu.hideMenuButton(true);
 
             setTitle(getResources().getString(R.string.add_product));
@@ -138,7 +139,7 @@ public class Navigation extends AppCompatActivity implements
         //Listen to Add Shop
         FloatingActionButton addShop = findViewById(R.id.fabAddShop);
         addShop.setOnClickListener(view -> {
-            FloatingActionMenu floatingActionMenu = findViewById(R.id.floatingMenu);
+            FloatingActionMenu floatingActionMenu = findViewById(R.id.shopFloatingMenu);
             floatingActionMenu.hideMenuButton(true);
 
             setTitle(getResources().getString(R.string.add_shop));
@@ -152,7 +153,7 @@ public class Navigation extends AppCompatActivity implements
         //Listen to Add Template
         FloatingActionButton addTemplate = findViewById(R.id.fabAddTemplate);
         addTemplate.setOnClickListener(view -> {
-            FloatingActionMenu floatingActionMenu = findViewById(R.id.floatingMenu);
+            FloatingActionMenu floatingActionMenu = findViewById(R.id.templateFloatingMenu);
             floatingActionMenu.hideMenuButton(true);
 
             setTitle(getResources().getString(R.string.add_template));
@@ -162,6 +163,10 @@ public class Navigation extends AppCompatActivity implements
             ft.addToBackStack(null);
             ft.commit();
         });
+
+        // init menus
+        shopFloatingMenu.showMenu(false);
+        templateFloatingMenu.hideMenu(false);
     }
 
     @Override
@@ -173,8 +178,11 @@ public class Navigation extends AppCompatActivity implements
             super.onBackPressed();
         }
 
-        FloatingActionMenu floatingActionMenu = findViewById(R.id.floatingMenu);
-        floatingActionMenu.showMenuButton(true);
+        FloatingActionMenu shopFloatingMenu = findViewById(R.id.shopFloatingMenu);
+        shopFloatingMenu.showMenuButton(true);
+
+        FloatingActionMenu templateFloatingMenu = findViewById(R.id.templateFloatingMenu);
+        templateFloatingMenu.showMenuButton(true);
 
         setTitle(lastTitle);
     }
@@ -194,16 +202,27 @@ public class Navigation extends AppCompatActivity implements
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        FloatingActionMenu shopFloatingMenu = findViewById(R.id.shopFloatingMenu);
+        FloatingActionMenu templateFloatingMenu = findViewById(R.id.templateFloatingMenu);
+
         Fragment fragment = null;
         Bundle bundle = new Bundle();
         if (id == R.id.nav_shoppinglist) {
             fragment = new ShoppingListFragment();
+            shopFloatingMenu.showMenu(false);
+            templateFloatingMenu.hideMenu(false);
         } else if (id == R.id.nav_standardlist) {
             fragment = new TemplateListFragment();
+            shopFloatingMenu.hideMenu(false);
+            templateFloatingMenu.showMenu(false);
         } else if (id == R.id.nav_history) {
             fragment = new PurchaseHistoryFragment();
+            shopFloatingMenu.hideMenu(false);
+            templateFloatingMenu.hideMenu(false);
         } else if (id == R.id.nav_settings) {
             fragment = new SettingsFragment();
+            shopFloatingMenu.hideMenu(false);
+            templateFloatingMenu.hideMenu(false);
         }
 
         if (fragment != null) {
@@ -232,6 +251,8 @@ public class Navigation extends AppCompatActivity implements
     public void onDialogDeleteClick(DeleteDialog dialog) {
         Shop shop = dialog.getShopToDelete();
         List<Item> shopItems = dialog.getShopItemsToDelete();
+
+        Item item = dialog.getItemToDelete();
 
         Template template = dialog.getTemplateToDelete();
         List<TemplateItem> templateItems = dialog.getTemplateItemsToDelete();
@@ -267,6 +288,15 @@ public class Navigation extends AppCompatActivity implements
             if (templateListFragment != null) {
                 // Call your method in the TabFragment
                 templateListFragment.updateData();
+            }
+        }
+        if (item != null) {
+            AppDatabase.getAppDatabase(getApplicationContext()).itemDAO().delete(item);
+
+            ShopDetailViewFragment shopDetailViewFragment = dialog.getShopDetailViewFragment();
+
+            if (shopDetailViewFragment != null) {
+                shopDetailViewFragment.updateData();
             }
         }
     }
