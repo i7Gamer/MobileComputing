@@ -1,32 +1,19 @@
 package at.fhv.mobilecomputing.fragments.Template;
 
-import android.app.Activity;
-import android.app.DatePickerDialog;
+import android.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
 
 import at.fhv.mobilecomputing.R;
 import at.fhv.mobilecomputing.database.AppDatabase;
-import at.fhv.mobilecomputing.database.entities.Item;
-import at.fhv.mobilecomputing.database.entities.Shop;
 import at.fhv.mobilecomputing.database.entities.TemplateItem;
 import at.fhv.mobilecomputing.fragments.Product.AddProduct;
 
@@ -88,11 +75,6 @@ public class AddTemplateItem extends Fragment {
         AppDatabase appDatabase = AppDatabase.getAppDatabase(getContext());
 
         addTemplateItemBtn.setOnClickListener(v -> {
-
-            Spinner template = getActivity().findViewById(R.id.spinner);
-            String selectedTempalte = template.getSelectedItem().toString();
-            Shop selShop = spinnerArray.stream().filter(shopName -> selectedTempalte.equals(shopName.getName())).findFirst().orElse(null);
-
             EditText name = getActivity().findViewById(R.id.editTextTemplateItemName);
             EditText description = getActivity().findViewById(R.id.editTextDescription);
             EditText amount = getActivity().findViewById(R.id.editTextAmount);

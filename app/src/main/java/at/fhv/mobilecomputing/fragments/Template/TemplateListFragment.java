@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.github.clans.fab.FloatingActionMenu;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,7 +30,7 @@ import at.fhv.mobilecomputing.fragments.DeleteDialog;
  * Activities that contain this fragment must implement the
  * {@link TemplateListFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link TemplateListFragment#newInstance} factory method to
+ * Use the {@link TemplateListFragment} factory method to
  * create an instance of this fragment.
  */
 public class TemplateListFragment extends Fragment {
@@ -77,6 +79,12 @@ public class TemplateListFragment extends Fragment {
 
         templateNameList.setOnItemClickListener((parent, view1, position, id) -> {
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+
+            FloatingActionMenu templateFloatingMenu = view.getRootView().findViewById(R.id.templateFloatingMenu);
+            templateFloatingMenu.hideMenu(false);
+
+            FloatingActionMenu templateDetailFloatingMenu = view.getRootView().findViewById(R.id.templateDetailFloatingMenu);
+            templateDetailFloatingMenu.showMenu(false);
 
             String selectedTemplateName = (String) templateNameList.getAdapter().getItem(position);
             Template template = AppDatabase.getAppDatabase(getContext()).templateDAO().findByName(selectedTemplateName);

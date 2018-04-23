@@ -62,6 +62,7 @@ public class Navigation extends AppCompatActivity implements
 
         FloatingActionMenu shopFloatingMenu = findViewById(R.id.shopFloatingMenu);
         FloatingActionMenu templateFloatingMenu = findViewById(R.id.templateFloatingMenu);
+        FloatingActionMenu templateDetailFloatingMenu = findViewById(R.id.templateDetailFloatingMenu);
         shopFloatingMenu.showMenuButton(true);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -167,6 +168,7 @@ public class Navigation extends AppCompatActivity implements
         // init menus
         shopFloatingMenu.showMenu(false);
         templateFloatingMenu.hideMenu(false);
+        templateDetailFloatingMenu.hideMenu(false);
     }
 
     @Override
@@ -184,7 +186,17 @@ public class Navigation extends AppCompatActivity implements
         FloatingActionMenu templateFloatingMenu = findViewById(R.id.templateFloatingMenu);
         templateFloatingMenu.showMenuButton(true);
 
+        FloatingActionMenu templateDetailFloatingMenu = findViewById(R.id.templateDetailFloatingMenu);
+        templateDetailFloatingMenu.showMenuButton(true);
+
         setTitle(lastTitle);
+
+        Fragment myFragment = getSupportFragmentManager().findFragmentByTag(TemplateListFragment.class.getSimpleName());
+        if (myFragment != null && myFragment.isVisible()) {
+            Log.i("Tag", "Back pressed and new fragment is templateListFragment");
+            templateDetailFloatingMenu.hideMenu(false);
+            templateFloatingMenu.showMenu(false);
+        }
     }
 
     @Override
@@ -227,7 +239,7 @@ public class Navigation extends AppCompatActivity implements
 
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.nav_content, fragment);
+            ft.replace(R.id.nav_content, fragment, fragment.getClass().getSimpleName());
             ft.commit();
         }
 
