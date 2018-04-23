@@ -37,5 +37,6 @@
     <string name="add_template">Vorlage hinzufügen</string>
 
     <string name="details_for_shop">Details für Shop: </string>
+    <string name="deleteProductMessage">Produkt wirklich löschen?</string>
 
 </resources>

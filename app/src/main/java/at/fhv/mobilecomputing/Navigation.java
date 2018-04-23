@@ -231,6 +231,8 @@ public class Navigation extends AppCompatActivity implements
         Shop shop = dialog.getShopToDelete();
         List<Item> shopItems = dialog.getShopItemsToDelete();
 
+        Item item = dialog.getItemToDelete();
+
         Template template = dialog.getTemplateToDelete();
         List<TemplateItem> templateItems = dialog.getTemplateItemsToDelete();
 
@@ -265,6 +267,15 @@ public class Navigation extends AppCompatActivity implements
             if (templateListFragment != null) {
                 // Call your method in the TabFragment
                 templateListFragment.updateData();
+            }
+        }
+        if (item != null) {
+            AppDatabase.getAppDatabase(getApplicationContext()).itemDAO().delete(item);
+
+            ShopDetailViewFragment shopDetailViewFragment = dialog.getShopDetailViewFragment();
+
+            if (shopDetailViewFragment != null) {
+                shopDetailViewFragment.updateData();
             }
         }
     }

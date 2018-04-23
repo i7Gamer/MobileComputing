@@ -41,8 +41,6 @@ public class ShoppingListFragment extends Fragment {
     ListView shoppingList;
     List<Shop> shops;
 
-    Shop shopToDelete;
-    List<Item> toDeleteShopItems;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -126,8 +124,9 @@ public class ShoppingListFragment extends Fragment {
         });
 
         shoppingList.setOnItemLongClickListener((parent, view1, arg2, arg3) -> {
-            shopToDelete = shops.get(arg2);
-            toDeleteShopItems = AppDatabase.getAppDatabase(getContext())
+
+            Shop shopToDelete = shops.get(arg2);
+            List<Item> toDeleteShopItems = AppDatabase.getAppDatabase(getContext())
                     .itemDAO().getAll().stream().filter(i -> i.getPurchaseId() == 0 &&
                             i.getShopId() == shopToDelete.getId()).collect(Collectors.toList());
 

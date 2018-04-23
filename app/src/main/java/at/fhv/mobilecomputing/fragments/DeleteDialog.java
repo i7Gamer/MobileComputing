@@ -17,6 +17,7 @@ import at.fhv.mobilecomputing.database.entities.Item;
 import at.fhv.mobilecomputing.database.entities.Shop;
 import at.fhv.mobilecomputing.database.entities.Template;
 import at.fhv.mobilecomputing.database.entities.TemplateItem;
+import at.fhv.mobilecomputing.fragments.Product.ShopDetailViewFragment;
 import at.fhv.mobilecomputing.fragments.Shop.ShoppingListFragment;
 import at.fhv.mobilecomputing.fragments.Template.TemplateListFragment;
 import lombok.Getter;
@@ -43,6 +44,9 @@ public class DeleteDialog extends DialogFragment {
     private Shop shopToDelete;
     @Getter
     @Setter
+    private Item itemToDelete;
+    @Getter
+    @Setter
     private List<Item> shopItemsToDelete;
     @Getter
     @Setter
@@ -56,6 +60,9 @@ public class DeleteDialog extends DialogFragment {
     @Getter
     @Setter
     private TemplateListFragment templateListFragment;
+    @Getter
+    @Setter
+    private ShopDetailViewFragment shopDetailViewFragment;
 
     private DeleteDialogListener mListener;
 
