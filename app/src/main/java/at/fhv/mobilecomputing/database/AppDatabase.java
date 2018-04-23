@@ -22,7 +22,7 @@ import at.fhv.mobilecomputing.database.entities.TemplateItem;
  * Created by timorzipa on 26.03.18.
  */
 
-@Database(entities = {Item.class, Purchase.class, Setting.class, Shop.class, Template.class, TemplateItem.class}, version = 4)
+@Database(entities = {Item.class, Purchase.class, Setting.class, Shop.class, Template.class, TemplateItem.class}, version = 5)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
