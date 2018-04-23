@@ -18,6 +18,7 @@ import com.github.clans.fab.FloatingActionMenu;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import at.fhv.mobilecomputing.Navigation;
 import at.fhv.mobilecomputing.R;
 import at.fhv.mobilecomputing.database.AppDatabase;
 import at.fhv.mobilecomputing.database.entities.Template;
@@ -78,6 +79,13 @@ public class TemplateListFragment extends Fragment {
         }
 
         templateNameList.setOnItemClickListener((parent, view1, position, id) -> {
+
+            String selectedTemplateName = (String) templateNameList.getAdapter().getItem(position);
+            Template template = AppDatabase.getAppDatabase(getContext()).templateDAO().findByName(selectedTemplateName);
+
+            Navigation navigation = (Navigation) getActivity();
+            navigation.setSelectedTemplateId(template.getId());
+
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
             FloatingActionMenu templateFloatingMenu = view.getRootView().findViewById(R.id.templateFloatingMenu);
@@ -86,8 +94,6 @@ public class TemplateListFragment extends Fragment {
             FloatingActionMenu templateDetailFloatingMenu = view.getRootView().findViewById(R.id.templateDetailFloatingMenu);
             templateDetailFloatingMenu.showMenu(false);
 
-            String selectedTemplateName = (String) templateNameList.getAdapter().getItem(position);
-            Template template = AppDatabase.getAppDatabase(getContext()).templateDAO().findByName(selectedTemplateName);
 
             TemplateItemsFragment templateItemsFragment = TemplateItemsFragment.newInstance(template.getId());
             fragmentTransaction.replace(R.id.nav_content, templateItemsFragment);

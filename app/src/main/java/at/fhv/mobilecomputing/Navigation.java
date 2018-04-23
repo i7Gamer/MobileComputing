@@ -34,6 +34,8 @@ import at.fhv.mobilecomputing.fragments.Template.AddTemplate;
 import at.fhv.mobilecomputing.fragments.Template.AddTemplateItem;
 import at.fhv.mobilecomputing.fragments.Template.TemplateItemsFragment;
 import at.fhv.mobilecomputing.fragments.Template.TemplateListFragment;
+import lombok.Getter;
+import lombok.Setter;
 
 public class Navigation extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
@@ -51,6 +53,10 @@ public class Navigation extends AppCompatActivity implements
 {
 
     String lastTitle;
+
+    @Setter
+    @Getter
+    int selectedTemplateId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +89,12 @@ public class Navigation extends AppCompatActivity implements
         }
         for (Item i : appDatabase.itemDAO().getAll()) {
             appDatabase.itemDAO().delete(i);
+        }
+
+        if (appDatabase.shopDAO().findByName("Default Shop") == null) {
+            Shop shop = new Shop();
+            shop.setName("Default Shop");
+            appDatabase.shopDAO().insertAll(shop);
         }
 
         if (appDatabase.shopDAO().findByName("Spar") == null) {
@@ -159,6 +171,20 @@ public class Navigation extends AppCompatActivity implements
 
             setTitle(getResources().getString(R.string.add_template));
             Fragment fragment = new AddTemplate();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.nav_content, fragment);
+            ft.addToBackStack(null);
+            ft.commit();
+        });
+
+        //Listen to Add Template item
+        FloatingActionButton addTemplateItem = findViewById(R.id.fabAddTemplateItem);
+        addTemplateItem.setOnClickListener(view -> {
+            FloatingActionMenu floatingActionMenu = findViewById(R.id.templateDetailFloatingMenu);
+            floatingActionMenu.hideMenuButton(true);
+
+            setTitle(getResources().getString(R.string.add_template_item));
+            Fragment fragment = AddTemplateItem.newInstance(selectedTemplateId);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.nav_content, fragment);
             ft.addToBackStack(null);

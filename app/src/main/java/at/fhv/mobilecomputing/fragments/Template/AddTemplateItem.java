@@ -1,6 +1,6 @@
 package at.fhv.mobilecomputing.fragments.Template;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,38 +17,31 @@ import at.fhv.mobilecomputing.database.AppDatabase;
 import at.fhv.mobilecomputing.database.entities.TemplateItem;
 import at.fhv.mobilecomputing.fragments.Product.AddProduct;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link AddTemplateItem.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link AddTemplateItem#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AddTemplateItem extends Fragment {
+    private static final String ARGUMENT_TEMPLATE = "template_id";
+
     private OnFragmentInteractionListener mListener;
-    public int selectedTemplateId;
+    private int selectedTemplateId;
 
     public AddTemplateItem() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AddTemplateItem.
-     */
-    public static AddTemplateItem newInstance() {
+    public static AddTemplateItem newInstance(int selectedTemplateId) {
         AddTemplateItem fragment = new AddTemplateItem();
+        Bundle args = new Bundle();
+        args.putInt(ARGUMENT_TEMPLATE, selectedTemplateId);
+        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            this.selectedTemplateId = getArguments().getInt(ARGUMENT_TEMPLATE);
+        }
     }
 
     @Override
@@ -83,7 +76,7 @@ public class AddTemplateItem extends Fragment {
             templateItem.setName(name.getText().toString());
             templateItem.setAmount(amount.getText().toString());
             templateItem.setDescription(description.getText().toString());
-            templateItem.setTemplateId(0);
+            templateItem.setTemplateId(selectedTemplateId);
 
             appDatabase.templateItemDAO().insertAll(templateItem);
             getActivity().onBackPressed();
@@ -96,16 +89,6 @@ public class AddTemplateItem extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
