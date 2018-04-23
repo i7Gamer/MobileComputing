@@ -38,6 +38,6 @@
     <string name="template_name">Template name</string>
     <string name="add_template">Add Template</string>
 
-    <string name="details_for_shop">Details for shop </string>
+    <string name="details_for_shop">Details for shop</string>
     <string name="deleteProductMessage">Do you really want to delete this product?</string>
 </resources>

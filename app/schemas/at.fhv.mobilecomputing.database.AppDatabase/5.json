@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 5,
-    "identityHash": "900fc9e883ef2bb9cdacd62d5d330f5c",
+    "identityHash": "bd2e85b5c26ef848d054335c2e3a2a9b",
     "entities": [
       {
         "tableName": "items",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `description` TEXT, `amount` TEXT, `shopId` INTEGER NOT NULL, `purchaseId` INTEGER NOT NULL, `dueDate` TEXT, `picture` BLOB)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `description` TEXT, `amount` TEXT, `shopId` INTEGER NOT NULL, `purchaseId` INTEGER NOT NULL, `dueDate` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -48,12 +48,6 @@
             "fieldPath": "dueDate",
             "columnName": "dueDate",
             "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "picture",
-            "columnName": "picture",
-            "affinity": "BLOB",
             "notNull": false
           }
         ],
@@ -247,7 +241,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"900fc9e883ef2bb9cdacd62d5d330f5c\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"bd2e85b5c26ef848d054335c2e3a2a9b\")"
     ]
   }
 }

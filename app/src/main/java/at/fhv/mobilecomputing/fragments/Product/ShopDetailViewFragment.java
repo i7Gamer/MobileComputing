@@ -10,9 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import at.fhv.mobilecomputing.R;
@@ -34,7 +40,7 @@ public class ShopDetailViewFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_SHOP = "shop";
     ListView productList;
-    List<Item> item;
+    List<Item> items;
     // TODO: Rename and change types of parameters
     private int shopId;
     private Shop shop;
@@ -67,9 +73,7 @@ public class ShopDetailViewFragment extends Fragment {
             shopId = getArguments().getInt(ARG_SHOP);
         }
         shop = AppDatabase.getAppDatabase(getContext()).shopDAO().getAll().stream().filter(s -> s.getId() == shopId).findFirst().get();
-
-        // TODO get string from resources
-        this.getActivity().setTitle(getResources().getString(R.string.details_for_shop) + shop.getName());
+        this.getActivity().setTitle(getResources().getString(R.string.details_for_shop) + " " + shop.getName());
     }
 
     @Override
@@ -99,7 +103,7 @@ public class ShopDetailViewFragment extends Fragment {
 
         productList.setOnItemLongClickListener((parent, view1, arg2, arg3) -> {
 
-            Item itemToDelete = item.get(arg2);
+            Item itemToDelete = items.get(arg2);
 
             DeleteDialog deleteDialog;
             deleteDialog = DeleteDialog.newInstance(getResources().getString(R.string.deleteProductMessage));
@@ -116,16 +120,40 @@ public class ShopDetailViewFragment extends Fragment {
 
     public void updateData() {
         AppDatabase db = AppDatabase.getAppDatabase(getContext());
-        item = db.itemDAO().getAll().stream().filter(s -> s.getShopId() == shopId).collect(Collectors.toList());
+        items = db.itemDAO().getAll().stream().filter(s -> s.getShopId() == shopId).collect(Collectors.toList());
 
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_list_item_1);
-        productList.setAdapter(adapter);
-
-        for (Item item : item) {
-            adapter.add(item.getName());
-        }
+        final ListAdapter listAdapter = createListAdapter(items);
+        productList.setAdapter(listAdapter);
     }
+
+    private ListAdapter createListAdapter(final List<Item> items) {
+        final String[] fromMapKey = new String[] {"name", "description"};
+        final int[] toLayoutId = new int[] {android.R.id.text1, android.R.id.text2};
+        final List<Map<String, String>> list = convertToListItems(items);
+
+        return new SimpleAdapter(getContext(), list,
+                android.R.layout.simple_list_item_2,
+                fromMapKey, toLayoutId);
+    }
+
+    private List<Map<String, String>> convertToListItems(final List<Item> items) {
+        final List<Map<String, String>> listItem =
+                new ArrayList<Map<String, String>>(items.size());
+
+        for (final Item item: items) {
+            String firstLine = item.getAmount() != null ? item.getAmount() + " " + item.getName() : item.getName();
+            String secondLine = item.getDueDate() != null ? "@" + item.getDueDate() + " " + item.getDescription() : item.getDescription();
+
+            final Map<String, String> listItemMap = new HashMap<>();
+            listItemMap.put("name", firstLine);
+            listItemMap.put("description", secondLine);
+            listItem.add(Collections.unmodifiableMap(listItemMap));
+        }
+        return Collections.unmodifiableList(listItem);
+    }
+
+
+
 
     @Override
     public void onAttach(Context context) {
