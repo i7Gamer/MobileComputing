@@ -40,4 +40,11 @@
 
     <string name="details_for_shop">Details for shop</string>
     <string name="deleteProductMessage">Do you really want to delete this product?</string>
+
+    <string name="add_template_item_name">Name</string>
+    <string name="add_template_item_amount">Amount</string>
+    <string name="add_template_item_description">Description</string>
+    <string name="add_template_item">Add Entry</string>
+    <string name="title_button_add_new_template_item">Add new Template Item</string>
+
 </resources>

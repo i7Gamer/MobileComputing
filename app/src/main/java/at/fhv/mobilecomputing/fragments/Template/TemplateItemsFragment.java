@@ -3,14 +3,29 @@ package at.fhv.mobilecomputing.fragments.Template;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import at.fhv.mobilecomputing.R;
 import at.fhv.mobilecomputing.database.AppDatabase;
+import at.fhv.mobilecomputing.database.entities.Item;
 import at.fhv.mobilecomputing.database.entities.Template;
+import at.fhv.mobilecomputing.database.entities.TemplateItem;
+import at.fhv.mobilecomputing.fragments.DeleteDialog;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,7 +38,7 @@ import at.fhv.mobilecomputing.database.entities.Template;
 public class TemplateItemsFragment extends Fragment {
     private static final String ARGUMENT_TEMPLATE = "template";
 
-    ListView templateItems;
+    ListView templateItemsList;
     private int templateId;
     private Template template;
     private OnFragmentInteractionListener mListener;
@@ -62,6 +77,77 @@ public class TemplateItemsFragment extends Fragment {
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        templateItemsList = view.findViewById(R.id.TemplateItemList);
+
+        updateData();
+
+        templateItemsList.setOnItemClickListener((parent, view12, position, id) -> {
+            // on product click
+        });
+
+        templateItemsList.setOnItemLongClickListener((parent, view1, arg2, arg3) -> {
+
+            /*
+            Item itemToDelete = items.get(arg2);
+
+            DeleteDialog deleteDialog;
+            deleteDialog = DeleteDialog.newInstance(getResources().getString(R.string.deleteProductMessage));
+
+            deleteDialog.setItemToDelete(itemToDelete);
+            deleteDialog.setShopDetailViewFragment(this);
+
+            assert getFragmentManager() != null;
+            deleteDialog.show(getFragmentManager(), "DeleteDialogFragment");
+
+            return true;
+            */
+            return true;
+        });
+    }
+
+    public void updateData() {
+        AppDatabase db = AppDatabase.getAppDatabase(getContext());
+        List<TemplateItem> items = db.templateItemDAO().getAll().stream().filter(s -> s.getTemplateId() == templateId).collect(Collectors.toList());
+
+        final ListAdapter listAdapter = createListAdapter(items);
+        templateItemsList.setAdapter(listAdapter);
+    }
+
+    private ListAdapter createListAdapter(final List<TemplateItem> items) {
+        final String[] fromMapKey = new String[] {"name", "description"};
+        final int[] toLayoutId = new int[] {android.R.id.text1, android.R.id.text2};
+        final List<Map<String, String>> list = convertToListItems(items);
+
+        return new SimpleAdapter(getContext(), list,
+                android.R.layout.simple_list_item_2,
+                fromMapKey, toLayoutId);
+    }
+
+    private List<Map<String, String>> convertToListItems(final List<TemplateItem> items) {
+        final List<Map<String, String>> listItem =
+                new ArrayList<Map<String, String>>(items.size());
+
+        for (final TemplateItem item: items) {
+            String firstLine = item.getAmount() != null ? item.getAmount() + " " + item.getName() : item.getName();
+            String secondLine = item.getDescription();
+
+            final Map<String, String> listItemMap = new HashMap<>();
+            listItemMap.put("name", firstLine);
+            listItemMap.put("description", secondLine);
+            listItem.add(Collections.unmodifiableMap(listItemMap));
+        }
+        return Collections.unmodifiableList(listItem);
+    }
+
+
+
+
+
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
@@ -78,16 +164,6 @@ public class TemplateItemsFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
