@@ -194,7 +194,6 @@ public class AddProduct extends Fragment {
             EditText amount = getActivity().findViewById(R.id.editTextAmount);
             EditText dueDate = getActivity().findViewById(R.id.editTextDueDate);
             Spinner shop = getActivity().findViewById(R.id.spinner);
-            ImageView imageView = getView().findViewById(R.id.imageViewProduct);
 
             Item newProduct = new Item();
             newProduct.setName(productName.getText().toString());
@@ -204,12 +203,6 @@ public class AddProduct extends Fragment {
             String selectedShop = shop.getSelectedItem().toString();
             Shop selShop = spinnerArray.stream().filter(shopName -> selectedShop.equals(shopName.getName())).findFirst().orElse(null);
             newProduct.setShopId(selShop.getId());
-            if (imageView.getDrawable() != null) {
-                Bitmap bm = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                bm.compress(Bitmap.CompressFormat.PNG, 100, bos);
-            }
-            //newProduct.setPicture(bos.toByteArray());
             appDatabase.itemDAO().insertAll(newProduct);
             getActivity().onBackPressed();
         });
