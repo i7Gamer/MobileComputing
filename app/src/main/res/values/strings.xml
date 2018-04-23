@@ -37,4 +37,6 @@
     <string name="navigation_template">Template</string>
     <string name="template_name">Template name</string>
     <string name="add_template">Add Template</string>
+
+    <string name="details_for_shop">Details for shop </string>
 </resources>

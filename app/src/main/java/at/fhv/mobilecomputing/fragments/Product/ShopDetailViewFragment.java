@@ -70,7 +70,7 @@ public class ShopDetailViewFragment extends Fragment {
         shop = AppDatabase.getAppDatabase(getContext()).shopDAO().getAll().stream().filter(s -> s.getId() == shopId).findFirst().get();
 
         // TODO get string from resources
-        this.getActivity().setTitle("Details for shop " + shop.getName());
+        this.getActivity().setTitle(getResources().getString(R.string.details_for_shop) + shop.getName());
     }
 
     @Override

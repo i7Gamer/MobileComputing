@@ -35,4 +35,7 @@
     <string name="navigation_template">Vorlage</string>
     <string name="template_name">Vorlage</string>
     <string name="add_template">Vorlage hinzufügen</string>
+
+    <string name="details_for_shop">Details für Shop: </string>
+
 </resources>
