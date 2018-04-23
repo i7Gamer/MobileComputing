@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,7 +107,14 @@ public class ShopDetailViewFragment extends Fragment {
         productList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // on product click
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    EditProduct fragment = new EditProduct();
+                    String selectedItemName = (String)productList.getItemAtPosition(position);
+                    Item selectedItem = items.stream().filter(itemName -> selectedItemName.equals(itemName.getName())).findFirst().orElse(null);
+                    fragment.setCurrentItem(selectedItem);
+                    fragmentTransaction.replace(R.id.nav_content, fragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
             }
         });
     }
