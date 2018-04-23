@@ -123,8 +123,8 @@ public class ShoppingListFragment extends Fragment {
         shoppingList.setOnItemClickListener((parent, view1, position, id) -> {
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
-            String selectedItem = (String) shoppingList.getAdapter().getItem(position);
-            Shop shop = AppDatabase.getAppDatabase(getContext()).shopDAO().findByName(selectedItem);
+            Map<String, String> selectedItem = (Map<String, String>) shoppingList.getAdapter().getItem(position);
+            Shop shop = AppDatabase.getAppDatabase(getContext()).shopDAO().findByName(selectedItem.get("name"));
 
             ShopDetailViewFragment shopDetailViewFragment = ShopDetailViewFragment.newInstance(shop.getId());
             fragmentTransaction.replace(R.id.nav_content, shopDetailViewFragment);
