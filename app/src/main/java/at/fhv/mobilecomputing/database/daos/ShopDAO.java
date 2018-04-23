@@ -25,6 +25,9 @@ public interface ShopDAO {
     @Query("SELECT * FROM shops WHERE shops.name = :name")
     Shop findByName(String name);
 
+    @Query("SELECT * FROM shops WHERE shops.id = :id")
+    Shop findById(int id);
+
     @Insert
     void insertAll(Shop... shops);
 

@@ -148,6 +148,7 @@ public class Navigation extends AppCompatActivity implements
         });
 
         //Listen to Add Template
+        /* has been removed
         FloatingActionButton addTemplate = findViewById(R.id.fabAddTemplate);
         addTemplate.setOnClickListener(view -> {
             FloatingActionMenu floatingActionMenu = findViewById(R.id.floatingMenu);
@@ -159,7 +160,7 @@ public class Navigation extends AppCompatActivity implements
             ft.replace(R.id.nav_content, fragment);
             ft.addToBackStack(null);
             ft.commit();
-        });
+        });*/
     }
 
     @Override
