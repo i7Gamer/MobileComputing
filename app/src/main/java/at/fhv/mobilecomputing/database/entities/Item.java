@@ -42,7 +42,4 @@ public class Item {
 
     @ColumnInfo(name = "dueDate")
     private String dueDate;
-
-    @ColumnInfo(name = "picture", typeAffinity = ColumnInfo.BLOB)
-    private byte[] picture;
 }

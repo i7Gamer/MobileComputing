@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -20,6 +19,7 @@ import at.fhv.mobilecomputing.R;
 import at.fhv.mobilecomputing.database.AppDatabase;
 import at.fhv.mobilecomputing.database.entities.Item;
 import at.fhv.mobilecomputing.database.entities.Shop;
+import at.fhv.mobilecomputing.fragments.DeleteDialog;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,9 +34,8 @@ public class ShopDetailViewFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_SHOP = "shop";
     ListView productList;
+    List<Item> item;
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private int shopId;
     private Shop shop;
     private OnFragmentInteractionListener mListener;
@@ -70,7 +69,7 @@ public class ShopDetailViewFragment extends Fragment {
         shop = AppDatabase.getAppDatabase(getContext()).shopDAO().getAll().stream().filter(s -> s.getId() == shopId).findFirst().get();
 
         // TODO get string from resources
-        this.getActivity().setTitle("Details for shop " + shop.getName());
+        this.getActivity().setTitle(getResources().getString(R.string.details_for_shop) + shop.getName());
     }
 
     @Override
@@ -92,23 +91,40 @@ public class ShopDetailViewFragment extends Fragment {
 
         productList = view.findViewById(R.id.ProductList);
 
+        updateData();
+
+        productList.setOnItemClickListener((parent, view12, position, id) -> {
+            // on product click
+        });
+
+        productList.setOnItemLongClickListener((parent, view1, arg2, arg3) -> {
+
+            Item itemToDelete = item.get(arg2);
+
+            DeleteDialog deleteDialog;
+            deleteDialog = DeleteDialog.newInstance(getResources().getString(R.string.deleteProductMessage));
+
+            deleteDialog.setItemToDelete(itemToDelete);
+            deleteDialog.setShopDetailViewFragment(this);
+
+            assert getFragmentManager() != null;
+            deleteDialog.show(getFragmentManager(), "DeleteDialogFragment");
+
+            return true;
+        });
+    }
+
+    public void updateData() {
         AppDatabase db = AppDatabase.getAppDatabase(getContext());
-        List<Item> items = db.itemDAO().getAll().stream().filter(s -> s.getShopId() == shopId).collect(Collectors.toList());
+        item = db.itemDAO().getAll().stream().filter(s -> s.getShopId() == shopId).collect(Collectors.toList());
 
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_list_item_1);
         productList.setAdapter(adapter);
 
-        for (Item item : items) {
+        for (Item item : item) {
             adapter.add(item.getName());
         }
-
-        productList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // on product click
-            }
-        });
     }
 
     @Override

@@ -106,23 +106,6 @@
                 android:textSize="18sp"
                 android:layout_margin="5dp"/>
 
-            <ImageView
-                android:id="@+id/imageViewProduct"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@android:color/darker_gray"
-                android:maxHeight="100dp"
-                android:maxWidth="100dp"
-                android:minHeight="100dp"
-                android:minWidth="100dp" />
-
-            <ImageButton
-                android:id="@+id/buttonAddImage"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_menu_camera" />
-
             <Button
                 android:id="@+id/buttonAddProduct"
                 android:layout_width="match_parent"
