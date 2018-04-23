@@ -31,6 +31,7 @@ import at.fhv.mobilecomputing.fragments.Settings.SettingsFragment;
 import at.fhv.mobilecomputing.fragments.Shop.AddShop;
 import at.fhv.mobilecomputing.fragments.Shop.ShoppingListFragment;
 import at.fhv.mobilecomputing.fragments.Template.AddTemplate;
+import at.fhv.mobilecomputing.fragments.Template.AddTemplateItem;
 import at.fhv.mobilecomputing.fragments.Template.TemplateItemsFragment;
 import at.fhv.mobilecomputing.fragments.Template.TemplateListFragment;
 
@@ -45,7 +46,8 @@ public class Navigation extends AppCompatActivity implements
         DeleteDialog.DeleteDialogListener,
         AddTemplate.OnFragmentInteractionListener,
         TemplateListFragment.OnFragmentInteractionListener,
-        TemplateItemsFragment.OnFragmentInteractionListener
+        TemplateItemsFragment.OnFragmentInteractionListener,
+        AddTemplateItem.OnFragmentInteractionListener
 {
 
     String lastTitle;
