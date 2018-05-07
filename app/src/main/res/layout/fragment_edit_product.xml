@@ -11,7 +11,7 @@
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             tools:context="at.fhv.mobilecomputing.fragments.Product.EditProduct">
 
@@ -96,7 +96,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:editable="false"
+                android:inputType="none" />
 
             <Button
                 android:id="@+id/buttonEditProduct"
