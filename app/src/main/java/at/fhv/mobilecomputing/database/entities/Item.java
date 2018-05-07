@@ -36,11 +36,11 @@ public class Item {
 
     @ColumnInfo(name = "shopId")
     @ForeignKey(entity = Shop.class, parentColumns = "id", childColumns = "shopId")
-    private int shopId;
+    private Integer shopId;
 
     @ColumnInfo(name = "purchaseId")
     @ForeignKey(entity = Purchase.class, parentColumns = "id", childColumns = "purchaseId")
-    private int purchaseId;
+    private Integer purchaseId;
 
     @ColumnInfo(name = "dueDate")
     private String dueDate;

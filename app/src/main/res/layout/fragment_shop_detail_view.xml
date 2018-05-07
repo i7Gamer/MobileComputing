@@ -28,7 +28,8 @@
                 android:id="@+id/finishPurchase"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="@string/finishPurchase"
+                android:visibility="invisible" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

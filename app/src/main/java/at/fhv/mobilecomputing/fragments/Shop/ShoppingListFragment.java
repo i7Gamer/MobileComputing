@@ -139,7 +139,7 @@ public class ShoppingListFragment extends Fragment {
 
             Shop shopToDelete = shops.get(arg2);
             List<Item> toDeleteShopItems = AppDatabase.getAppDatabase(getContext())
-                    .itemDAO().getAll().stream().filter(i -> i.getPurchaseId() == 0 &&
+                    .itemDAO().getAll().stream().filter(i -> i.getPurchaseId() == null &&
                             i.getShopId() == shopToDelete.getId()).collect(Collectors.toList());
 
             DeleteDialog deleteDialog;

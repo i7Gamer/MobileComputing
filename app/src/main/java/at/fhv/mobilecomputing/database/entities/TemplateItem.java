@@ -27,7 +27,7 @@ public class TemplateItem {
 
     @ForeignKey(entity = Shop.class, parentColumns = "id", childColumns = "shopId")
     @ColumnInfo(name = "shopId")
-    private int shopId;
+    private Integer shopId;
 
     @NonNull
     @lombok.NonNull

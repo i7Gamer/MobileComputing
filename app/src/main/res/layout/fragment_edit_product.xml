@@ -3,76 +3,77 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="at.fhv.mobilecomputing.fragments.AddProduct"
-    >
+    tools:context="at.fhv.mobilecomputing.fragments.Product.EditProduct">
+
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            tools:context="at.fhv.mobilecomputing.fragments.Product.AddProduct">
+            tools:context="at.fhv.mobilecomputing.fragments.Product.EditProduct">
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/textViewProductName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:text="@string/add_product_name"
                 android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:layout_margin="5dp"/>
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/editTextProductName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:layout_margin="5dp"/>
+                android:inputType="textPersonName" />
 
             <TextView
                 android:id="@+id/textViewDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:text="@string/add_product_description"
                 android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:layout_margin="5dp"/>
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/editTextDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:layout_margin="5dp"/>/
+                android:inputType="textPersonName" />/
 
             <TextView
                 android:id="@+id/textViewAmount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:text="@string/add_product_amount"
                 android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:layout_margin="5dp"/>
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/editTextAmount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:layout_margin="5dp"/>
+                android:inputType="textPersonName" />
 
             <TextView
                 android:id="@+id/textViewShop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:text="@string/add_product_shop"
                 android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:layout_margin="5dp"/>
+                android:textSize="18sp" />
 
             <Spinner
                 android:id="@+id/spinner"
@@ -84,35 +85,26 @@
                 android:id="@+id/textViewDueDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:text="@string/add_product_duedate"
                 android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:layout_margin="5dp"/>
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/editTextDueDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:ems="10"
                 android:editable="false"
-                android:layout_margin="5dp"/>
-
-            <TextView
-                android:id="@+id/textViewPicture"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/add_product_picture"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:layout_margin="5dp"/>
+                android:inputType="none" />
 
             <Button
-                android:id="@+id/buttonAddProduct"
+                android:id="@+id/buttonEditProduct"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="@string/add_product" />
+                android:text="@string/edit" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
-

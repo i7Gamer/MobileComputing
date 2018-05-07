@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -24,7 +26,8 @@ import at.fhv.mobilecomputing.R;
 import at.fhv.mobilecomputing.database.AppDatabase;
 import at.fhv.mobilecomputing.database.entities.Item;
 import at.fhv.mobilecomputing.database.entities.Shop;
-import at.fhv.mobilecomputing.fragments.DeleteDialog;
+import at.fhv.mobilecomputing.fragments.EditDialog;
+import at.fhv.mobilecomputing.fragments.FinishPurchaseFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,6 +43,8 @@ public class ShopDetailViewFragment extends Fragment {
     private static final String ARG_SHOP = "shop";
     ListView productList;
     List<Item> items;
+    List<Item> selectedItems = new ArrayList<>();
+    boolean itemChecked = false;
     // TODO: Rename and change types of parameters
     private int shopId;
     private Shop shop;
@@ -91,27 +96,40 @@ public class ShopDetailViewFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Button btn = view.findViewById(R.id.finishPurchase);
+
+        btn.setOnClickListener(v -> {
+            finishPurchase(view);
+        });
 
         productList = view.findViewById(R.id.ProductList);
 
         updateData();
 
         productList.setOnItemClickListener((parent, view12, position, id) -> {
-            productList.setItemChecked(position, productList.isItemChecked(position));
+            if (productList.getCheckedItemCount() > 0) {
+                btn.setVisibility(View.VISIBLE);
+                selectedItems.add(items.get(position));
+            } else {
+                btn.setVisibility(View.INVISIBLE);
+                selectedItems.remove(items.get(position));
+            }
+
+            //productList.setItemChecked(position, productList.isItemChecked(position));
         });
 
         productList.setOnItemLongClickListener((parent, view1, arg2, arg3) -> {
 
             Item itemToDelete = items.get(arg2);
 
-            DeleteDialog deleteDialog;
-            deleteDialog = DeleteDialog.newInstance(getResources().getString(R.string.deleteProductMessage));
+            EditDialog editDialog;
+            editDialog = EditDialog.newInstance(getResources().getString(R.string.editProductMessage));
 
-            deleteDialog.setItemToDelete(itemToDelete);
-            deleteDialog.setShopDetailViewFragment(this);
+            editDialog.setItemToDelete(itemToDelete);
+            editDialog.setShopDetailViewFragment(this);
 
             assert getFragmentManager() != null;
-            deleteDialog.show(getFragmentManager(), "DeleteDialogFragment");
+            editDialog.show(getFragmentManager(), "EditDialogFragment");
 
             return true;
         });
@@ -119,8 +137,22 @@ public class ShopDetailViewFragment extends Fragment {
 
     public void updateData() {
         AppDatabase db = AppDatabase.getAppDatabase(getContext());
-        items = db.itemDAO().getAll().stream().filter(s -> s.getShopId() == shopId).collect(Collectors.toList());
+        items = db.itemDAO().getAll().stream().filter(s -> s.getShopId() == shopId && s.getPurchaseId() == null).collect(Collectors.toList());
         productList.setAdapter(createListAdapter(items));
+    }
+
+    public void finishPurchase(View view) {
+        for (int i = 0; i < productList.getCount() - 1; i++) {
+            productList.setItemChecked(i, false);
+        }
+
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+
+        FinishPurchaseFragment finishPurchaseFragment = new FinishPurchaseFragment();
+        finishPurchaseFragment.selectedItems = selectedItems;
+        fragmentTransaction.replace(R.id.nav_content, finishPurchaseFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     private ListAdapter createListAdapter(final List<Item> items) {
