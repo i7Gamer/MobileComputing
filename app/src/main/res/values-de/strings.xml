@@ -7,7 +7,7 @@
     <string name="navigation_drawer_open">navigation drawer öffnen</string>
     <string name="navigation_drawer_close">navigation drawer schließen</string>
 
-    <string name="title_button_add_new_shop">Neuen Shop hinzufügen</string>
+    <string name="title_button_add_new_shop">Neuer Shop hinzufügen</string>
     <string name="title_button_add_new_product">Neues Produkt hinzufügen</string>
     <string name="title_button_add_new_template">Neue Vorlage hinzufügen</string>
 
@@ -44,4 +44,5 @@
     <string name="add_template_item_amount">Menge</string>
     <string name="add_template_item_description">Beschreibung</string>
     <string name="add_template_item">Eintrag hinzufügen</string>
+    <string name="title_button_add_new_template_item">Neues Produkt zur Vorlage hinzufügen</string>
 </resources>

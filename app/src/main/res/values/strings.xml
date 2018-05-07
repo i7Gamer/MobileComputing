@@ -46,6 +46,6 @@
     <string name="add_template_item_amount">Amount</string>
     <string name="add_template_item_description">Description</string>
     <string name="add_template_item">Add Entry</string>
-    <string name="title_button_add_new_template_item">Add new Template Item</string>
+    <string name="title_button_add_new_template_item">Add new Item</string>
 
 </resources>
