@@ -45,4 +45,8 @@
     <string name="add_template_item_description">Beschreibung</string>
     <string name="add_template_item">Eintrag hinzufügen</string>
     <string name="title_button_add_new_template_item">Neues Produkt zur Vorlage hinzufügen</string>
+    <string name="finishPurchase">Einkauf abschließen</string>
+    <string name="total">Summe</string>
+    <string name="edit">Bearbeiten</string>
+    <string name="editProductMessage">Produkt bearbeiten</string>
 </resources>

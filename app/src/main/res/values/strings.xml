@@ -47,5 +47,9 @@
     <string name="add_template_item_description">Description</string>
     <string name="add_template_item">Add Entry</string>
     <string name="title_button_add_new_template_item">Add new Item</string>
+    <string name="finishPurchase">Finish purchase</string>
+    <string name="total">Total</string>
+    <string name="edit">Edit</string>
+    <string name="editProductMessage">Edit product</string>
 
 </resources>

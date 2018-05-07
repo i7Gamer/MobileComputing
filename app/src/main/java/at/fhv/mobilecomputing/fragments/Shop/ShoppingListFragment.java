@@ -10,11 +10,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -134,7 +132,7 @@ public class ShoppingListFragment extends Fragment {
 
             Shop shopToDelete = shops.get(arg2);
             List<Item> toDeleteShopItems = AppDatabase.getAppDatabase(getContext())
-                    .itemDAO().getAll().stream().filter(i -> i.getPurchaseId() == 0 &&
+                    .itemDAO().getAll().stream().filter(i -> i.getPurchaseId() == null &&
                             i.getShopId() == shopToDelete.getId()).collect(Collectors.toList());
 
             DeleteDialog deleteDialog;

@@ -23,7 +23,10 @@ public interface PurchaseDAO {
     List<Purchase> loadAllByIds(int[] purchaseId);
 
     @Insert
-    void insertAll(Purchase... purchases);
+    long[] insertAll(Purchase... purchases);
+
+    @Insert
+    long insert(Purchase purchase);
 
     @Update
     void updateAll(Purchase... purchases);

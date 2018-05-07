@@ -20,10 +20,13 @@ import java.util.List;
 
 import at.fhv.mobilecomputing.database.AppDatabase;
 import at.fhv.mobilecomputing.database.entities.Item;
+import at.fhv.mobilecomputing.database.entities.Purchase;
 import at.fhv.mobilecomputing.database.entities.Shop;
 import at.fhv.mobilecomputing.database.entities.Template;
 import at.fhv.mobilecomputing.database.entities.TemplateItem;
 import at.fhv.mobilecomputing.fragments.DeleteDialog;
+import at.fhv.mobilecomputing.fragments.EditDialog;
+import at.fhv.mobilecomputing.fragments.FinishPurchaseFragment;
 import at.fhv.mobilecomputing.fragments.History.PurchaseHistoryFragment;
 import at.fhv.mobilecomputing.fragments.Product.AddProduct;
 import at.fhv.mobilecomputing.fragments.Product.ShopDetailViewFragment;
@@ -46,10 +49,12 @@ public class Navigation extends AppCompatActivity implements
         AddProduct.OnFragmentInteractionListener,
         ShopDetailViewFragment.OnFragmentInteractionListener,
         DeleteDialog.DeleteDialogListener,
+        EditDialog.EditDialogListener,
         AddTemplate.OnFragmentInteractionListener,
         TemplateListFragment.OnFragmentInteractionListener,
         TemplateItemsFragment.OnFragmentInteractionListener,
-        AddTemplateItem.OnFragmentInteractionListener
+        AddTemplateItem.OnFragmentInteractionListener,
+        FinishPurchaseFragment.OnFragmentInteractionListener
 {
 
     String lastTitle;
@@ -104,12 +109,16 @@ public class Navigation extends AppCompatActivity implements
             appDatabase.shopDAO().insertAll(shop);
         }
 
+        for (Purchase p : appDatabase.purchaseDAO().getAll()) {
+            appDatabase.purchaseDAO().delete(p);
+        }
+
         if (appDatabase.itemDAO().findByName("Mohren") == null) {
             Item item = new Item();
             item.setName("Mohren");
             item.setDescription("Bier");
             item.setAmount("999");
-            Shop shop = appDatabase.shopDAO().getAll().get(0);
+            Shop shop = appDatabase.shopDAO().getAll().get(1);
             item.setShopId(shop.getId());
             appDatabase.itemDAO().insertAll(item);
 
@@ -287,12 +296,9 @@ public class Navigation extends AppCompatActivity implements
 
     @Override
     public void onDialogDeleteClick(DeleteDialog dialog) {
-        //Delet a shop
+        //Delete a shop
         Shop shop = dialog.getShopToDelete();
         List<Item> shopItems = dialog.getShopItemsToDelete();
-
-        //Delete one shop item
-        Item shopItem = dialog.getItemToDelete();
 
         //Delete a template
         Template template = dialog.getTemplateToDelete();
@@ -334,15 +340,7 @@ public class Navigation extends AppCompatActivity implements
                 templateListFragment.updateData();
             }
         }
-        if (shopItem != null) {
-            AppDatabase.getAppDatabase(getApplicationContext()).itemDAO().delete(shopItem);
 
-            ShopDetailViewFragment shopDetailViewFragment = dialog.getShopDetailViewFragment();
-
-            if (shopDetailViewFragment != null) {
-                shopDetailViewFragment.updateData();
-            }
-        }
         if (templateItem != null) {
             AppDatabase.getAppDatabase(getApplicationContext()).templateItemDAO().delete(templateItem);
 
@@ -357,5 +355,35 @@ public class Navigation extends AppCompatActivity implements
     @Override
     public void onDialogCancelClick(DeleteDialog dialog) {
         Log.i("deleteDialog", "cancel pressed");
+    }
+
+    @Override
+    public void onEditDialogDeleteClick(EditDialog dialog) {
+        Log.i("editDeleteDialog", "delete pressed");
+
+        //Delete one shop item
+        Item shopItem = dialog.getItemToDelete();
+
+        if (shopItem != null) {
+            AppDatabase.getAppDatabase(getApplicationContext()).itemDAO().delete(shopItem);
+
+            ShopDetailViewFragment shopDetailViewFragment = dialog.getShopDetailViewFragment();
+
+            if (shopDetailViewFragment != null) {
+                shopDetailViewFragment.updateData();
+            }
+        }
+    }
+
+    @Override
+    public void onEditDialogEditClick(EditDialog dialog) {
+        Log.i("editDeleteDialog", "edit pressed");
+
+        // TODO insert edit code here
+    }
+
+    @Override
+    public void onEditDialogCancelClick(EditDialog dialog) {
+        Log.i("editDeleteDialog", "cancel pressed");
     }
 }
