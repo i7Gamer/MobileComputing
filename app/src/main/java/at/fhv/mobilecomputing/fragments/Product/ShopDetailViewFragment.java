@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -98,7 +97,7 @@ public class ShopDetailViewFragment extends Fragment {
         updateData();
 
         productList.setOnItemClickListener((parent, view12, position, id) -> {
-            // on product click
+            productList.setItemChecked(position, productList.isItemChecked(position));
         });
 
         productList.setOnItemLongClickListener((parent, view1, arg2, arg3) -> {
@@ -121,9 +120,7 @@ public class ShopDetailViewFragment extends Fragment {
     public void updateData() {
         AppDatabase db = AppDatabase.getAppDatabase(getContext());
         items = db.itemDAO().getAll().stream().filter(s -> s.getShopId() == shopId).collect(Collectors.toList());
-
-        final ListAdapter listAdapter = createListAdapter(items);
-        productList.setAdapter(listAdapter);
+        productList.setAdapter(createListAdapter(items));
     }
 
     private ListAdapter createListAdapter(final List<Item> items) {
@@ -132,13 +129,13 @@ public class ShopDetailViewFragment extends Fragment {
         final List<Map<String, String>> list = convertToListItems(items);
 
         return new SimpleAdapter(getContext(), list,
-                android.R.layout.simple_list_item_2,
+                android.R.layout.simple_list_item_checked,
                 fromMapKey, toLayoutId);
     }
 
     private List<Map<String, String>> convertToListItems(final List<Item> items) {
         final List<Map<String, String>> listItem =
-                new ArrayList<Map<String, String>>(items.size());
+                new ArrayList<>(items.size());
 
         for (final Item item: items) {
             String firstLine = item.getAmount() != null ? item.getAmount() + " " + item.getName() : item.getName();
