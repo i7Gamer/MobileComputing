@@ -152,9 +152,6 @@ public class ShopDetailViewFragment extends Fragment {
         return Collections.unmodifiableList(listItem);
     }
 
-
-
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
