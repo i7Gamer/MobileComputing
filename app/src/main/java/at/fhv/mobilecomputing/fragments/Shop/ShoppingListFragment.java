@@ -1,23 +1,30 @@
 package at.fhv.mobilecomputing.fragments.Shop;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -88,8 +95,6 @@ public class ShoppingListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-
         return inflater.inflate(R.layout.fragment_shopping_list, container, false);
     }
 
@@ -155,6 +160,8 @@ public class ShoppingListFragment extends Fragment {
 
             return true;
         });
+
+        sendNotification();
     }
 
     public void updateData() {
@@ -206,5 +213,49 @@ public class ShoppingListFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public void sendNotification() {
+        SimpleDateFormat dt1 = new SimpleDateFormat("mm/dd/yy");
+        List<Item> itemsToBuyToday = AppDatabase.getAppDatabase(getContext()).itemDAO().getAll().stream().filter(i -> i.getPurchaseId() == null && (dt1.format(new Date()).toString()).equals(i.getDueDate())).collect(Collectors.toList());
+
+        if(itemsToBuyToday.size() > 0) {
+
+            NotificationCompat.Builder mBuilder =
+                    new NotificationCompat.Builder(getContext().getApplicationContext(), "notify_001");
+            Intent ii = new Intent(getContext(), ShoppingListFragment.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(getContext(), 0, ii, 0);
+
+            NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
+
+            String textToDisplay = "";
+            for(Item itemToBuy : itemsToBuyToday) {
+                textToDisplay = textToDisplay + itemToBuy.getName() + System.lineSeparator();
+            }
+            bigText.bigText(textToDisplay);
+
+            bigText.setBigContentTitle("Today:");
+            bigText.setSummaryText("Reminder");
+
+            mBuilder.setContentIntent(pendingIntent);
+            mBuilder.setSmallIcon(R.drawable.ic_shopping_cart_black_24dp);
+            mBuilder.setContentTitle("Your Title");
+            mBuilder.setContentText("Your text");
+            mBuilder.setPriority(Notification.PRIORITY_MAX);
+            mBuilder.setStyle(bigText);
+
+            NotificationManager mNotificationManager =
+                    (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                NotificationChannel channel = new NotificationChannel("notify_001",
+                        "Channel human readable title",
+                        NotificationManager.IMPORTANCE_DEFAULT);
+                mNotificationManager.createNotificationChannel(channel);
+            }
+
+            mNotificationManager.notify(0, mBuilder.build());
+        }
     }
 }

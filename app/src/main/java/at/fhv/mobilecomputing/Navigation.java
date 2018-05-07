@@ -1,10 +1,19 @@
 package at.fhv.mobilecomputing;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,6 +25,8 @@ import android.view.MenuItem;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import at.fhv.mobilecomputing.database.AppDatabase;
@@ -60,7 +71,6 @@ public class Navigation extends AppCompatActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -84,6 +94,7 @@ public class Navigation extends AppCompatActivity implements
 
         AppDatabase appDatabase = AppDatabase.getAppDatabase(getApplicationContext());
 
+        SimpleDateFormat dt1 = new SimpleDateFormat("mm/dd/yy");
         for (Shop s : appDatabase.shopDAO().getAll()) {
             appDatabase.shopDAO().delete(s);
         }
@@ -109,6 +120,7 @@ public class Navigation extends AppCompatActivity implements
             item.setName("Mohren");
             item.setDescription("Bier");
             item.setAmount("999");
+            item.setDueDate(dt1.format(new Date()).toString());
             Shop shop = appDatabase.shopDAO().getAll().get(0);
             item.setShopId(shop.getId());
             appDatabase.itemDAO().insertAll(item);
@@ -118,6 +130,7 @@ public class Navigation extends AppCompatActivity implements
             item.setDescription("Bier");
             item.setAmount("999");
             item.setShopId(shop.getId());
+            item.setDueDate(dt1.format(new Date()).toString());
             appDatabase.itemDAO().insertAll(item);
         }
 
