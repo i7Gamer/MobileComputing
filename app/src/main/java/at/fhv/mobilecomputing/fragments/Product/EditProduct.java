@@ -93,8 +93,8 @@ public class EditProduct extends Fragment {
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spinnerArrayStrings);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        Spinner sItems = (Spinner) getActivity().findViewById(R.id.spinner);
-        sItems.setAdapter(adapter);
+        Spinner spinner = (Spinner) getActivity().findViewById(R.id.spinner);
+        spinner.setAdapter(adapter);
         EditText productName = getActivity().findViewById(R.id.editTextProductName);
         productName.setText(currentItem.getName(), TextView.BufferType.EDITABLE);
         EditText description = getActivity().findViewById(R.id.editTextDescription);
@@ -103,15 +103,13 @@ public class EditProduct extends Fragment {
         amount.setText(currentItem.getAmount(), TextView.BufferType.EDITABLE);
         EditText dueDate = getActivity().findViewById(R.id.editTextDueDate);
         dueDate.setText(currentItem.getDueDate(), TextView.BufferType.EDITABLE);
-        Spinner shop = getActivity().findViewById(R.id.spinner);
-        Shop selShop = new Shop();
+
         for (Shop shopinList : spinnerArray) {
-            if (currentItem.getId() == shopinList.getId()) {
-                selShop = shopinList;
+            if (currentItem.getShopId() == shopinList.getId()) {
+                spinner.setSelection(adapter.getPosition(shopinList.getName()));
                 return;
             }
         }
-        shop.setSelection(adapter.getPosition(selShop.getName()));
 
         Button editProduct = getActivity().findViewById(R.id.buttonEditProduct);
         List<Shop> finalSpinnerArray = spinnerArray;
@@ -120,7 +118,7 @@ public class EditProduct extends Fragment {
             currentItem.setDescription(description.getText().toString());
             currentItem.setAmount(amount.getText().toString());
             currentItem.setDueDate(dueDate.getText().toString());
-            String selectedShop = shop.getSelectedItem().toString();
+            String selectedShop = spinner.getSelectedItem().toString();
             Shop selShop1 = finalSpinnerArray.stream().filter(shopName -> selectedShop.equals(shopName.getName())).findFirst().orElse(null);
             currentItem.setShopId(selShop1.getId());
             appDatabase.itemDAO().updateAll(currentItem);
