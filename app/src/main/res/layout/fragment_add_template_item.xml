@@ -1,0 +1,77 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="at.fhv.mobilecomputing.fragments.Template.AddTemplateItem"
+    >
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            tools:context="at.fhv.mobilecomputing.fragments.Template.AddTemplateItem">
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_template_item_name"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:layout_margin="5dp"/>
+
+            <EditText
+                android:id="@+id/editTextTemplateItemName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_margin="5dp"/>
+
+            <TextView
+                android:id="@+id/textViewDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_template_item_description"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:layout_margin="5dp"/>
+
+            <EditText
+                android:id="@+id/editTextDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_margin="5dp"/>/
+
+            <TextView
+                android:id="@+id/textViewAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_template_item_amount"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:layout_margin="5dp"/>
+
+            <EditText
+                android:id="@+id/editTextAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_margin="5dp"/>
+
+            <Button
+                android:id="@+id/buttonAddTemplateItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/add_template_item" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+

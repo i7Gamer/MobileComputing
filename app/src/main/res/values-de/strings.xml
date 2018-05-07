@@ -7,7 +7,7 @@
     <string name="navigation_drawer_open">navigation drawer öffnen</string>
     <string name="navigation_drawer_close">navigation drawer schließen</string>
 
-    <string name="title_button_add_new_shop">Neuen Shop hinzufügen</string>
+    <string name="title_button_add_new_shop">Neuer Shop hinzufügen</string>
     <string name="title_button_add_new_product">Neues Produkt hinzufügen</string>
     <string name="title_button_add_new_template">Neue Vorlage hinzufügen</string>
 
@@ -32,6 +32,7 @@
     <string name="deleteShopMessageContainingItems2">" nicht gekaufte Produkte."</string>
     <string name="deleteShopMessage">Shop wirklich löschen?</string>
     <string name="deleteTemplateMessage">Template wirklich löschen?</string>
+    <string name="deleteTemplateItemMessage">Produkt wirklich löschen?</string>
     <string name="navigation_template">Vorlage</string>
     <string name="template_name">Vorlage</string>
     <string name="add_template">Vorlage hinzufügen</string>
@@ -39,6 +40,14 @@
     <string name="details_for_shop">Details für Shop</string>
     <string name="deleteProductMessage">Produkt wirklich löschen?</string>
 
+<<<<<<< HEAD
     <string name="edit_product">Produkt bearbeiten</string>
 
+=======
+    <string name="add_template_item_name">Name</string>
+    <string name="add_template_item_amount">Menge</string>
+    <string name="add_template_item_description">Beschreibung</string>
+    <string name="add_template_item">Eintrag hinzufügen</string>
+    <string name="title_button_add_new_template_item">Neues Produkt zur Vorlage hinzufügen</string>
+>>>>>>> master
 </resources>

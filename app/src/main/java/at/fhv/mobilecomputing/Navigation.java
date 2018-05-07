@@ -32,8 +32,11 @@ import at.fhv.mobilecomputing.fragments.Settings.SettingsFragment;
 import at.fhv.mobilecomputing.fragments.Shop.AddShop;
 import at.fhv.mobilecomputing.fragments.Shop.ShoppingListFragment;
 import at.fhv.mobilecomputing.fragments.Template.AddTemplate;
+import at.fhv.mobilecomputing.fragments.Template.AddTemplateItem;
 import at.fhv.mobilecomputing.fragments.Template.TemplateItemsFragment;
 import at.fhv.mobilecomputing.fragments.Template.TemplateListFragment;
+import lombok.Getter;
+import lombok.Setter;
 
 public class Navigation extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
@@ -47,10 +50,15 @@ public class Navigation extends AppCompatActivity implements
         AddTemplate.OnFragmentInteractionListener,
         TemplateListFragment.OnFragmentInteractionListener,
         TemplateItemsFragment.OnFragmentInteractionListener,
-        EditProduct.OnFragmentInteractionListener
+        EditProduct.OnFragmentInteractionListener,
+        AddTemplateItem.OnFragmentInteractionListener
 {
 
     String lastTitle;
+
+    @Setter
+    @Getter
+    int selectedTemplateId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +70,7 @@ public class Navigation extends AppCompatActivity implements
 
         FloatingActionMenu shopFloatingMenu = findViewById(R.id.shopFloatingMenu);
         FloatingActionMenu templateFloatingMenu = findViewById(R.id.templateFloatingMenu);
+        FloatingActionMenu templateDetailFloatingMenu = findViewById(R.id.templateDetailFloatingMenu);
         shopFloatingMenu.showMenuButton(true);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -82,6 +91,12 @@ public class Navigation extends AppCompatActivity implements
         }
         for (Item i : appDatabase.itemDAO().getAll()) {
             appDatabase.itemDAO().delete(i);
+        }
+
+        if (appDatabase.shopDAO().findByName("Default Shop") == null) {
+            Shop shop = new Shop();
+            shop.setName("Default Shop");
+            appDatabase.shopDAO().insertAll(shop);
         }
 
         if (appDatabase.shopDAO().findByName("Spar") == null) {
@@ -164,9 +179,24 @@ public class Navigation extends AppCompatActivity implements
             ft.commit();
         });
 
+        //Listen to Add Template item
+        FloatingActionButton addTemplateItem = findViewById(R.id.fabAddTemplateItem);
+        addTemplateItem.setOnClickListener(view -> {
+            FloatingActionMenu floatingActionMenu = findViewById(R.id.templateDetailFloatingMenu);
+            floatingActionMenu.hideMenuButton(true);
+
+            setTitle(getResources().getString(R.string.add_template_item));
+            Fragment fragment = AddTemplateItem.newInstance(selectedTemplateId);
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.nav_content, fragment);
+            ft.addToBackStack(null);
+            ft.commit();
+        });
+
         // init menus
         shopFloatingMenu.showMenu(false);
         templateFloatingMenu.hideMenu(false);
+        templateDetailFloatingMenu.hideMenu(false);
     }
 
     @Override
@@ -184,7 +214,17 @@ public class Navigation extends AppCompatActivity implements
         FloatingActionMenu templateFloatingMenu = findViewById(R.id.templateFloatingMenu);
         templateFloatingMenu.showMenuButton(true);
 
+        FloatingActionMenu templateDetailFloatingMenu = findViewById(R.id.templateDetailFloatingMenu);
+        templateDetailFloatingMenu.showMenuButton(true);
+
         setTitle(lastTitle);
+
+        Fragment myFragment = getSupportFragmentManager().findFragmentByTag(TemplateListFragment.class.getSimpleName());
+        if (myFragment != null && myFragment.isVisible()) {
+            Log.i("Tag", "Back pressed and new fragment is templateListFragment");
+            templateDetailFloatingMenu.hideMenu(false);
+            templateFloatingMenu.showMenu(false);
+        }
     }
 
     @Override
@@ -227,7 +267,7 @@ public class Navigation extends AppCompatActivity implements
 
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.nav_content, fragment);
+            ft.replace(R.id.nav_content, fragment, fragment.getClass().getSimpleName());
             ft.commit();
         }
 
@@ -249,13 +289,19 @@ public class Navigation extends AppCompatActivity implements
 
     @Override
     public void onDialogDeleteClick(DeleteDialog dialog) {
+        //Delet a shop
         Shop shop = dialog.getShopToDelete();
         List<Item> shopItems = dialog.getShopItemsToDelete();
 
-        Item item = dialog.getItemToDelete();
+        //Delete one shop item
+        Item shopItem = dialog.getItemToDelete();
 
+        //Delete a template
         Template template = dialog.getTemplateToDelete();
         List<TemplateItem> templateItems = dialog.getTemplateItemsToDelete();
+
+        //Delete one templateItem
+        TemplateItem templateItem = dialog.getTemplateItemToDelete();
 
         if (shop != null) {
             if (shopItems != null && !shopItems.isEmpty()) {
@@ -290,13 +336,22 @@ public class Navigation extends AppCompatActivity implements
                 templateListFragment.updateData();
             }
         }
-        if (item != null) {
-            AppDatabase.getAppDatabase(getApplicationContext()).itemDAO().delete(item);
+        if (shopItem != null) {
+            AppDatabase.getAppDatabase(getApplicationContext()).itemDAO().delete(shopItem);
 
             ShopDetailViewFragment shopDetailViewFragment = dialog.getShopDetailViewFragment();
 
             if (shopDetailViewFragment != null) {
                 shopDetailViewFragment.updateData();
+            }
+        }
+        if (templateItem != null) {
+            AppDatabase.getAppDatabase(getApplicationContext()).templateItemDAO().delete(templateItem);
+
+            TemplateItemsFragment templateItemsFragment = dialog.getTemplateItemsFragment();
+
+            if (templateItemsFragment != null) {
+                templateItemsFragment.updateData();
             }
         }
     }
