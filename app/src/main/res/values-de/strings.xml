@@ -49,4 +49,5 @@
     <string name="total">Summe</string>
     <string name="edit">Bearbeiten</string>
     <string name="editProductMessage">Produkt bearbeiten</string>
+    <string name="shareApp">Anwendung teilen</string>
 </resources>

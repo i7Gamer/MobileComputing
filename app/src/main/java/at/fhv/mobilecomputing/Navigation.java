@@ -1,5 +1,6 @@
 package at.fhv.mobilecomputing;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -29,6 +30,7 @@ import at.fhv.mobilecomputing.fragments.EditDialog;
 import at.fhv.mobilecomputing.fragments.FinishPurchaseFragment;
 import at.fhv.mobilecomputing.fragments.History.PurchaseHistoryFragment;
 import at.fhv.mobilecomputing.fragments.Product.AddProduct;
+import at.fhv.mobilecomputing.fragments.Product.EditProduct;
 import at.fhv.mobilecomputing.fragments.Product.ShopDetailViewFragment;
 import at.fhv.mobilecomputing.fragments.Settings.SettingsFragment;
 import at.fhv.mobilecomputing.fragments.Shop.AddShop;
@@ -54,7 +56,8 @@ public class Navigation extends AppCompatActivity implements
         TemplateListFragment.OnFragmentInteractionListener,
         TemplateItemsFragment.OnFragmentInteractionListener,
         AddTemplateItem.OnFragmentInteractionListener,
-        FinishPurchaseFragment.OnFragmentInteractionListener
+        FinishPurchaseFragment.OnFragmentInteractionListener,
+        EditProduct.OnFragmentInteractionListener
 {
 
     String lastTitle;
@@ -270,6 +273,13 @@ public class Navigation extends AppCompatActivity implements
             fragment = new SettingsFragment();
             shopFloatingMenu.hideMenu(false);
             templateFloatingMenu.hideMenu(false);
+        } else if (id == R.id.nav_sendinvite) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "Check out this amazing app!");
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
+            return true;
         }
 
         if (fragment != null) {
@@ -379,7 +389,16 @@ public class Navigation extends AppCompatActivity implements
     public void onEditDialogEditClick(EditDialog dialog) {
         Log.i("editDeleteDialog", "edit pressed");
 
-        // TODO insert edit code here
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+
+        Item newItem = dialog.getItemToDelete();
+
+        EditProduct fragment = new EditProduct();
+        fragment.setCurrentItem(newItem);
+        fragmentTransaction.replace(R.id.nav_content, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     @Override

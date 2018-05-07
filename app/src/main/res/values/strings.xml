@@ -51,5 +51,6 @@
     <string name="total">Total</string>
     <string name="edit">Edit</string>
     <string name="editProductMessage">Edit product</string>
+    <string name="shareApp">Share App</string>
 
 </resources>
