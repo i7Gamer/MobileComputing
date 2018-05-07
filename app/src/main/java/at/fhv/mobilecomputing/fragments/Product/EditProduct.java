@@ -1,5 +1,7 @@
 package at.fhv.mobilecomputing.fragments.Product;
 
+import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,14 +11,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import at.fhv.mobilecomputing.R;
 import at.fhv.mobilecomputing.database.AppDatabase;
@@ -70,8 +76,6 @@ public class EditProduct extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Spinner sItems = (Spinner) getActivity().findViewById(R.id.spinner);
         sItems.setAdapter(adapter);
-
-
         EditText productName = getActivity().findViewById(R.id.editTextProductName);
         productName.setText(currentItem.getName() , TextView.BufferType.EDITABLE);
         EditText description = getActivity().findViewById(R.id.editTextDescription);
@@ -93,7 +97,6 @@ public class EditProduct extends Fragment {
         Button editProduct = getActivity().findViewById(R.id.buttonEditProduct);
         List<Shop> finalSpinnerArray = spinnerArray;
         editProduct.setOnClickListener(v -> {
-
             currentItem.setName(productName.getText().toString());
             currentItem.setDescription(description.getText().toString());
             currentItem.setAmount(amount.getText().toString());
@@ -103,6 +106,26 @@ public class EditProduct extends Fragment {
             currentItem.setShopId(selShop1.getId());
             appDatabase.itemDAO().updateAll(currentItem);
             getActivity().onBackPressed();
+        });
+
+        Calendar myCalendar = Calendar.getInstance();
+
+        EditText edittext = getActivity().findViewById(R.id.editTextDueDate);
+        DatePickerDialog.OnDateSetListener date = (view1, year, monthOfYear, dayOfMonth) -> {
+            // TODO Auto-generated method stub
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            String myFormat = "MM/dd/yy";
+            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+            edittext.setText(sdf.format(myCalendar.getTime()));
+        };
+        edittext.setOnClickListener(v -> {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            new DatePickerDialog(getContext(), date, myCalendar
+                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
         });
 
     }

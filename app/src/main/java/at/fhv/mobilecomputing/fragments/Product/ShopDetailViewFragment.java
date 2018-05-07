@@ -94,15 +94,8 @@ public class ShopDetailViewFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         productList = view.findViewById(R.id.ProductList);
-
         updateData();
-
-        productList.setOnItemClickListener((parent, view12, position, id) -> {
-            // on product click
-        });
-
         productList.setOnItemLongClickListener((parent, view1, arg2, arg3) -> {
             Item itemToDelete = items.get(arg2);
             DeleteDialog deleteDialog;
@@ -114,15 +107,23 @@ public class ShopDetailViewFragment extends Fragment {
             return true;
         });
 
-
         productList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    EditProduct fragment = new EditProduct();
-                    String selectedItemName = (String)productList.getItemAtPosition(position);
-                    Item selectedItem = items.stream().filter(itemName -> selectedItemName.equals(itemName.getName())).findFirst().orElse(null);
-                    fragment.setCurrentItem(selectedItem);
+                    Map<String, String> item = (Map<String, String>) productList.getAdapter().getItem(position);
+                    String selectedItemName = item.get("name");
+                    selectedItemName = selectedItemName.substring(selectedItemName.indexOf(' ') + 1);
+                    String temp = selectedItemName;
+                    Item newItem = new Item();
+                    for(Item i : items) {
+                        if(i.getName().equals(temp)) {
+                            newItem = i;
+                            break;
+                        }
+                    }
+                    EditProduct fragment = EditProduct.newInstance(temp, temp);
+                    fragment.setCurrentItem(newItem);
                     fragmentTransaction.replace(R.id.nav_content, fragment);
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
@@ -163,9 +164,6 @@ public class ShopDetailViewFragment extends Fragment {
         }
         return Collections.unmodifiableList(listItem);
     }
-
-
-
 
     @Override
     public void onAttach(Context context) {
