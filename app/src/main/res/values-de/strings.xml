@@ -39,4 +39,8 @@
     <string name="details_for_shop">Details für Shop</string>
     <string name="deleteProductMessage">Produkt wirklich löschen?</string>
 
+    <string name="add_template_item_name">Name</string>
+    <string name="add_template_item_amount">Menge</string>
+    <string name="add_template_item_description">Beschreibung</string>
+    <string name="add_template_item">Eintrag hinzufügen</string>
 </resources>
