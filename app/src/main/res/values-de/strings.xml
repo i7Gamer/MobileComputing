@@ -32,6 +32,7 @@
     <string name="deleteShopMessageContainingItems2">" nicht gekaufte Produkte."</string>
     <string name="deleteShopMessage">Shop wirklich löschen?</string>
     <string name="deleteTemplateMessage">Template wirklich löschen?</string>
+    <string name="deleteTemplateItemMessage">Produkt wirklich löschen?</string>
     <string name="navigation_template">Vorlage</string>
     <string name="template_name">Vorlage</string>
     <string name="add_template">Vorlage hinzufügen</string>

@@ -287,13 +287,19 @@ public class Navigation extends AppCompatActivity implements
 
     @Override
     public void onDialogDeleteClick(DeleteDialog dialog) {
+        //Delet a shop
         Shop shop = dialog.getShopToDelete();
         List<Item> shopItems = dialog.getShopItemsToDelete();
 
-        Item item = dialog.getItemToDelete();
+        //Delete one shop item
+        Item shopItem = dialog.getItemToDelete();
 
+        //Delete a template
         Template template = dialog.getTemplateToDelete();
         List<TemplateItem> templateItems = dialog.getTemplateItemsToDelete();
+
+        //Delete one templateItem
+        TemplateItem templateItem = dialog.getTemplateItemToDelete();
 
         if (shop != null) {
             if (shopItems != null && !shopItems.isEmpty()) {
@@ -328,13 +334,22 @@ public class Navigation extends AppCompatActivity implements
                 templateListFragment.updateData();
             }
         }
-        if (item != null) {
-            AppDatabase.getAppDatabase(getApplicationContext()).itemDAO().delete(item);
+        if (shopItem != null) {
+            AppDatabase.getAppDatabase(getApplicationContext()).itemDAO().delete(shopItem);
 
             ShopDetailViewFragment shopDetailViewFragment = dialog.getShopDetailViewFragment();
 
             if (shopDetailViewFragment != null) {
                 shopDetailViewFragment.updateData();
+            }
+        }
+        if (templateItem != null) {
+            AppDatabase.getAppDatabase(getApplicationContext()).templateItemDAO().delete(templateItem);
+
+            TemplateItemsFragment templateItemsFragment = dialog.getTemplateItemsFragment();
+
+            if (templateItemsFragment != null) {
+                templateItemsFragment.updateData();
             }
         }
     }

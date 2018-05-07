@@ -43,6 +43,8 @@ public class TemplateItemsFragment extends Fragment {
     private Template template;
     private OnFragmentInteractionListener mListener;
 
+    List<TemplateItem> templateItemsFromDB;
+
     public TemplateItemsFragment() {
         // Required empty public constructor
     }
@@ -90,29 +92,26 @@ public class TemplateItemsFragment extends Fragment {
 
         templateItemsList.setOnItemLongClickListener((parent, view1, arg2, arg3) -> {
 
-            /*
-            Item itemToDelete = items.get(arg2);
+            TemplateItem itemToDelete = templateItemsFromDB.get(arg2);
 
             DeleteDialog deleteDialog;
-            deleteDialog = DeleteDialog.newInstance(getResources().getString(R.string.deleteProductMessage));
+            deleteDialog = DeleteDialog.newInstance(getResources().getString(R.string.deleteTemplateItemMessage));
 
-            deleteDialog.setItemToDelete(itemToDelete);
-            deleteDialog.setShopDetailViewFragment(this);
+            deleteDialog.setTemplateItemToDelete(itemToDelete);
+            deleteDialog.setTemplateItemsFragment(this);
 
             assert getFragmentManager() != null;
             deleteDialog.show(getFragmentManager(), "DeleteDialogFragment");
 
-            return true;
-            */
             return true;
         });
     }
 
     public void updateData() {
         AppDatabase db = AppDatabase.getAppDatabase(getContext());
-        List<TemplateItem> items = db.templateItemDAO().getAll().stream().filter(s -> s.getTemplateId() == templateId).collect(Collectors.toList());
+        templateItemsFromDB = db.templateItemDAO().getAll().stream().filter(s -> s.getTemplateId() == templateId).collect(Collectors.toList());
 
-        final ListAdapter listAdapter = createListAdapter(items);
+        final ListAdapter listAdapter = createListAdapter(templateItemsFromDB);
         templateItemsList.setAdapter(listAdapter);
     }
 
@@ -141,11 +140,6 @@ public class TemplateItemsFragment extends Fragment {
         }
         return Collections.unmodifiableList(listItem);
     }
-
-
-
-
-
 
     @Override
     public void onAttach(Context context) {
