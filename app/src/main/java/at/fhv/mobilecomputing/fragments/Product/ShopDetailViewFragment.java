@@ -113,16 +113,14 @@ public class ShopDetailViewFragment extends Fragment {
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                     Map<String, String> item = (Map<String, String>) productList.getAdapter().getItem(position);
                     String selectedItemName = item.get("name");
-                    selectedItemName = selectedItemName.substring(selectedItemName.indexOf(' ') + 1);
-                    String temp = selectedItemName;
                     Item newItem = new Item();
                     for(Item i : items) {
-                        if(i.getName().equals(temp)) {
+                        if(i.getName().equals(selectedItemName)) {
                             newItem = i;
                             break;
                         }
                     }
-                    EditProduct fragment = EditProduct.newInstance(temp, temp);
+                    EditProduct fragment = EditProduct.newInstance(selectedItemName, null);
                     fragment.setCurrentItem(newItem);
                     fragmentTransaction.replace(R.id.nav_content, fragment);
                     fragmentTransaction.addToBackStack(null);
@@ -152,7 +150,7 @@ public class ShopDetailViewFragment extends Fragment {
                 new ArrayList<>(items.size());
 
         for (final Item item: items) {
-            String firstLine = item.getAmount() != null ? item.getAmount() + " " + item.getName() : item.getName();
+            String firstLine =  item.getName();
             String secondLine = item.getDueDate() != null ? "@" + item.getDueDate() + " " + item.getDescription() : item.getDescription();
 
             final Map<String, String> listItemMap = new HashMap<>();
