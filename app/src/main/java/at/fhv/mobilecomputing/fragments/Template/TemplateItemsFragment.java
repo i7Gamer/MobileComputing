@@ -22,10 +22,9 @@ import java.util.stream.Collectors;
 
 import at.fhv.mobilecomputing.R;
 import at.fhv.mobilecomputing.database.AppDatabase;
-import at.fhv.mobilecomputing.database.entities.Item;
 import at.fhv.mobilecomputing.database.entities.Template;
 import at.fhv.mobilecomputing.database.entities.TemplateItem;
-import at.fhv.mobilecomputing.fragments.DeleteDialog;
+import at.fhv.mobilecomputing.fragments.Dialogs.DeleteDialog;
 
 /**
  * A simple {@link Fragment} subclass.

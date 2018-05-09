@@ -1,4 +1,4 @@
-package at.fhv.mobilecomputing.fragments;
+package at.fhv.mobilecomputing.fragments.Product;
 
 import android.app.Activity;
 import android.content.Context;

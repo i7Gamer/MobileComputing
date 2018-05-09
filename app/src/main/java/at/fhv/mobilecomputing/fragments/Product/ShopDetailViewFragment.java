@@ -26,8 +26,7 @@ import at.fhv.mobilecomputing.R;
 import at.fhv.mobilecomputing.database.AppDatabase;
 import at.fhv.mobilecomputing.database.entities.Item;
 import at.fhv.mobilecomputing.database.entities.Shop;
-import at.fhv.mobilecomputing.fragments.EditDialog;
-import at.fhv.mobilecomputing.fragments.FinishPurchaseFragment;
+import at.fhv.mobilecomputing.fragments.Dialogs.EditDialog;
 
 /**
  * A simple {@link Fragment} subclass.

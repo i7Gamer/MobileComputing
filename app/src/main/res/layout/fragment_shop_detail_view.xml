@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <at.fhv.mobilecomputing.CustomListView
+            <at.fhv.mobilecomputing.fragments.Product.CustomListView
                 android:id="@+id/ProductList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
