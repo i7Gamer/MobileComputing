@@ -14,6 +14,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -216,8 +217,9 @@ public class ShoppingListFragment extends Fragment {
     }
 
     public void sendNotification() {
-        SimpleDateFormat dt1 = new SimpleDateFormat("mm/dd/yy");
-        List<Item> itemsToBuyToday = AppDatabase.getAppDatabase(getContext()).itemDAO().getAll().stream().filter(i -> i.getPurchaseId() == null && (dt1.format(new Date()).toString()).equals(i.getDueDate())).collect(Collectors.toList());
+        SimpleDateFormat dt1 = new SimpleDateFormat("MM/dd/yy");
+        List<Item> itemsToBuyToday = AppDatabase.getAppDatabase(getContext()).itemDAO().getAll()
+                .stream().filter(i -> i.getPurchaseId() == null && (dt1.format(new Date()).toString()).equals(i.getDueDate())).collect(Collectors.toList());
 
         if(itemsToBuyToday.size() > 0) {
 
@@ -230,7 +232,10 @@ public class ShoppingListFragment extends Fragment {
 
             String textToDisplay = "";
             for(Item itemToBuy : itemsToBuyToday) {
-                textToDisplay = textToDisplay + itemToBuy.getName() + System.lineSeparator();
+                if(textToDisplay != "") {
+                    textToDisplay +=  System.lineSeparator();
+                }
+                textToDisplay += itemToBuy.getAmount() != null ? itemToBuy.getAmount() + " " + itemToBuy.getName() : itemToBuy.getName();
             }
             bigText.bigText(textToDisplay);
 
