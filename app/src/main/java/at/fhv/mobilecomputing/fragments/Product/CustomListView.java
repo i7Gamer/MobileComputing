@@ -1,4 +1,4 @@
-package at.fhv.mobilecomputing;
+package at.fhv.mobilecomputing.fragments.Product;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -26,5 +26,4 @@ public class CustomListView extends ListView {
 
         super.onDraw(canvas);
     }
-
 }
