@@ -93,8 +93,7 @@ public class Navigation extends AppCompatActivity implements
 
         AppDatabase appDatabase = AppDatabase.getAppDatabase(getApplicationContext());
 
-        SimpleDateFormat dt1 = new SimpleDateFormat("mm/dd/yy");
-        /*
+        SimpleDateFormat dt1 = new SimpleDateFormat("MM/dd/yy");
         for (Shop s : appDatabase.shopDAO().getAll()) {
             appDatabase.shopDAO().delete(s);
         }
@@ -137,7 +136,7 @@ public class Navigation extends AppCompatActivity implements
             item.setDueDate(dt1.format(new Date()).toString());
             appDatabase.itemDAO().insertAll(item);
         }
-*/
+
         if (savedInstanceState == null) {
             Fragment fragment = new ShoppingListFragment();
 

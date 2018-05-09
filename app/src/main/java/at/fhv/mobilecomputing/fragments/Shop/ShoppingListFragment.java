@@ -221,6 +221,8 @@ public class ShoppingListFragment extends Fragment {
         List<Item> itemsToBuyToday = AppDatabase.getAppDatabase(getContext()).itemDAO().getAll()
                 .stream().filter(i -> i.getPurchaseId() == null && (dt1.format(new Date()).toString()).equals(i.getDueDate())).collect(Collectors.toList());
 
+        Log.i("Date:", dt1.format(new Date()).toString());
+
         if(itemsToBuyToday.size() > 0) {
 
             NotificationCompat.Builder mBuilder =
