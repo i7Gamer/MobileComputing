@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 import at.fhv.mobilecomputing.R;
 import at.fhv.mobilecomputing.database.AppDatabase;
@@ -104,12 +105,8 @@ public class EditProduct extends Fragment {
         EditText dueDate = getActivity().findViewById(R.id.editTextDueDate);
         dueDate.setText(currentItem.getDueDate(), TextView.BufferType.EDITABLE);
 
-        for (Shop shopinList : spinnerArray) {
-            if (currentItem.getShopId() == shopinList.getId()) {
-                spinner.setSelection(adapter.getPosition(shopinList.getName()));
-                return;
-            }
-        }
+        Optional<Shop> shop = spinnerArray.stream().filter(s -> s.getId() == currentItem.getShopId()).findFirst();
+        spinner.setSelection(adapter.getPosition(shop.get().getName()));
 
         Button editProduct = getActivity().findViewById(R.id.buttonEditProduct);
         List<Shop> finalSpinnerArray = spinnerArray;
