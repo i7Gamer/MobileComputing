@@ -281,7 +281,7 @@ public class Navigation extends AppCompatActivity implements
         } else if (id == R.id.nav_sendinvite) {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, "Check out this amazing app!");
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "Check out this amazing Shopping List app!");
             sendIntent.setType("text/plain");
             startActivity(sendIntent);
             return true;
