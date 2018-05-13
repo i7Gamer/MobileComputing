@@ -462,7 +462,7 @@ public class Navigation extends AppCompatActivity implements
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 NotificationChannel channel = new NotificationChannel("notify_001",
-                        "Channel human readable title",
+                        "shpping list notifications",
                         NotificationManager.IMPORTANCE_DEFAULT);
                 mNotificationManager.createNotificationChannel(channel);
             }
