@@ -1,11 +1,18 @@
 package at.fhv.mobilecomputing;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -20,6 +27,7 @@ import com.github.clans.fab.FloatingActionMenu;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import at.fhv.mobilecomputing.database.AppDatabase;
 import at.fhv.mobilecomputing.database.entities.Item;
@@ -89,8 +97,9 @@ public class Navigation extends AppCompatActivity implements
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // insert test data
 
+
+        // insert test data
         AppDatabase appDatabase = AppDatabase.getAppDatabase(getApplicationContext());
 
         SimpleDateFormat dt1 = new SimpleDateFormat("MM/dd/yy");
@@ -211,6 +220,8 @@ public class Navigation extends AppCompatActivity implements
         shopFloatingMenu.showMenu(false);
         templateFloatingMenu.hideMenu(false);
         templateDetailFloatingMenu.hideMenu(false);
+
+        sendNotification(getApplicationContext());
     }
 
     @Override
@@ -408,5 +419,55 @@ public class Navigation extends AppCompatActivity implements
     @Override
     public void onEditDialogCancelClick(EditDialog dialog) {
         Log.i("editDeleteDialog", "cancel pressed");
+    }
+
+    public void sendNotification(Context context) {
+        SimpleDateFormat dt1 = new SimpleDateFormat("MM/dd/yy");
+        List<Item> itemsToBuyToday = AppDatabase.getAppDatabase(context).itemDAO().getAll()
+                .stream().filter(i -> i.getPurchaseId() == null && (dt1.format(new Date()).toString()).equals(i.getDueDate())).collect(Collectors.toList());
+
+        Log.i("Date:", dt1.format(new Date()).toString());
+
+        if(itemsToBuyToday.size() > 0) {
+
+            NotificationCompat.Builder mBuilder =
+                    new NotificationCompat.Builder(context.getApplicationContext(), "notify_001");
+            Intent intend = new Intent(context, ShoppingListFragment.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intend, 0);
+
+            NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
+
+            String textToDisplay = "";
+            for(Item itemToBuy : itemsToBuyToday) {
+                if(textToDisplay != "") {
+                    textToDisplay +=  System.lineSeparator();
+                }
+                textToDisplay += itemToBuy.getAmount() != null ? itemToBuy.getAmount() + " " + itemToBuy.getName() : itemToBuy.getName();
+            }
+            bigText.bigText(textToDisplay);
+
+            bigText.setBigContentTitle("Today:");
+            bigText.setSummaryText("Reminder");
+
+            mBuilder.setContentIntent(pendingIntent);
+            mBuilder.setSmallIcon(R.drawable.ic_shopping_cart_black_24dp);
+            mBuilder.setContentTitle("Your Title");
+            mBuilder.setContentText("Your text");
+            mBuilder.setPriority(Notification.PRIORITY_MAX);
+            mBuilder.setStyle(bigText);
+
+            NotificationManager mNotificationManager =
+                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                NotificationChannel channel = new NotificationChannel("notify_001",
+                        "shpping list notifications",
+                        NotificationManager.IMPORTANCE_DEFAULT);
+                mNotificationManager.createNotificationChannel(channel);
+            }
+
+            mNotificationManager.notify(0, mBuilder.build());
+        }
     }
 }
