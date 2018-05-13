@@ -118,20 +118,20 @@ public class Navigation extends AppCompatActivity implements
             appDatabase.purchaseDAO().delete(p);
         }
 
-        if (appDatabase.itemDAO().findByName("Mohren") == null) {
+        if (appDatabase.itemDAO().findByName("Milch") == null) {
             Item item = new Item();
-            item.setName("Mohren");
-            item.setDescription("Bier");
-            item.setAmount("999");
+            item.setName("Milch");
+            item.setDescription("Laendle Milch");
+            item.setAmount("3");
             item.setDueDate(dt1.format(new Date()).toString());
             Shop shop = appDatabase.shopDAO().getAll().get(1);
             item.setShopId(shop.getId());
             appDatabase.itemDAO().insertAll(item);
 
             item = new Item();
-            item.setName("Fohren");
-            item.setDescription("Bier");
-            item.setAmount("999");
+            item.setName("Erdbeeren");
+            item.setDescription("Herkunft nur aus Österreich");
+            item.setAmount("1");
             item.setShopId(shop.getId());
             item.setDueDate(dt1.format(new Date()).toString());
             appDatabase.itemDAO().insertAll(item);
