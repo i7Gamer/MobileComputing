@@ -86,6 +86,7 @@ public class ShoppingListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -161,8 +162,6 @@ public class ShoppingListFragment extends Fragment {
 
             return true;
         });
-
-        sendNotification();
     }
 
     public void updateData() {
@@ -227,8 +226,8 @@ public class ShoppingListFragment extends Fragment {
 
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(getContext().getApplicationContext(), "notify_001");
-            Intent ii = new Intent(getContext(), ShoppingListFragment.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(getContext(), 0, ii, 0);
+            Intent intend = new Intent(getContext(), ShoppingListFragment.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(getContext(), 0, intend, 0);
 
             NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
 
