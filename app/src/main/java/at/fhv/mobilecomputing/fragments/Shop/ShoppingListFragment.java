@@ -184,7 +184,7 @@ public class ShoppingListFragment extends Fragment {
 
     private List<Map<String, String>> convertToListItems(final List<Shop> shops) {
         final List<Map<String, String>> listItem =
-                new ArrayList<Map<String, String>>(shops.size());
+                new ArrayList<>(shops.size());
 
         for (final Shop shop: shops) {
             final Map<String, String> listItemMap = new HashMap<>();
@@ -218,9 +218,9 @@ public class ShoppingListFragment extends Fragment {
     public void sendNotification() {
         SimpleDateFormat dt1 = new SimpleDateFormat("MM/dd/yy");
         List<Item> itemsToBuyToday = AppDatabase.getAppDatabase(getContext()).itemDAO().getAll()
-                .stream().filter(i -> i.getPurchaseId() == null && (dt1.format(new Date()).toString()).equals(i.getDueDate())).collect(Collectors.toList());
+                .stream().filter(i -> i.getPurchaseId() == null && (dt1.format(new Date())).equals(i.getDueDate())).collect(Collectors.toList());
 
-        Log.i("Date:", dt1.format(new Date()).toString());
+        Log.i("Date:", dt1.format(new Date()));
 
         if(itemsToBuyToday.size() > 0) {
 

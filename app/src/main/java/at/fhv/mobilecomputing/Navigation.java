@@ -335,7 +335,9 @@ public class Navigation extends AppCompatActivity implements
         if (shop != null) {
             if (shopItems != null && !shopItems.isEmpty()) {
                 for (Item i : shopItems) {
-                    AppDatabase.getAppDatabase(getApplicationContext()).itemDAO().delete(i);
+                    if (i.getPurchaseId() != null) {
+                        AppDatabase.getAppDatabase(getApplicationContext()).itemDAO().delete(i);
+                    }
                 }
             }
 
