@@ -166,7 +166,7 @@ public class ShoppingListFragment extends Fragment {
 
     public void updateData() {
         AppDatabase db = AppDatabase.getAppDatabase(getContext());
-        shops = db.shopDAO().getAll();
+        shops = db.shopDAO().getAll().stream().filter(s -> !s.isDeleted()).collect(Collectors.toList());
 
         final ListAdapter listAdapter = createListAdapter(shops);
         shoppingList.setAdapter(listAdapter);
