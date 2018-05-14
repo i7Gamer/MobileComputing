@@ -451,8 +451,8 @@ public class Navigation extends AppCompatActivity implements
 
             mBuilder.setContentIntent(pendingIntent);
             mBuilder.setSmallIcon(R.drawable.ic_shopping_cart_black_24dp);
-            mBuilder.setContentTitle("Your Title");
-            mBuilder.setContentText("Your text");
+            mBuilder.setContentTitle("Shopping App");
+            mBuilder.setContentText("Your personal shopping reminder.");
             mBuilder.setPriority(Notification.PRIORITY_MAX);
             mBuilder.setStyle(bigText);
 
